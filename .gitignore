@@ -1,0 +1,23 @@
+# Virtual environment
+venv/
+
+# Data (too large for GitHub)
+ai-models/data/raw/
+ai-models/data/processed/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Mac system files
+.DS_Store
+
+# Model weights (too large)
+*.pt
+*.pth
+*.ckpt
+
+# Secrets
+.env
