@@ -18,6 +18,8 @@ __pycache__/
 *.pt
 *.pth
 *.ckpt
+# PyCharm IDE files
+.idea/
 
 # Secrets
 .env
