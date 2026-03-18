@@ -1,25 +1,16 @@
-# Virtual environment
 venv/
-
-# Data (too large for GitHub)
-ai-models/data/raw/
-ai-models/data/processed/
-
-# Python cache
+.idea/
 __pycache__/
 *.pyc
-*.pyo
-.ipynb_checkpoints/
 
-# Mac system files
-.DS_Store
+model/models/distilbert_crisis_classifier/checkpoint-*/
+model/models/distilbert_crisis_classifier/*.bin
+model/models/distilbert_crisis_classifier/*.safetensors
+model/models/distilbert_crisis_classifier/pytorch_model.*
+model/models/distilbert_crisis_classifier/model.safetensors
 
-# Model weights (too large)
-*.pt
-*.pth
-*.ckpt
-# PyCharm IDE files
-.idea/
-
-# Secrets
-.env
+model/**/*.pt
+model/**/*.pth
+model/**/*.ckpt
+model/**/*.bin
+model/**/*.safetensors

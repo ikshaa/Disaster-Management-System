@@ -1,0 +1,18 @@
+{
+  "base_model": "distilbert-base-uncased",
+  "labels": [
+    "people trapped",
+    "injured people",
+    "fire damage",
+    "flood damage",
+    "infrastructure collapse",
+    "request for rescue",
+    "low priority situation"
+  ],
+  "train_examples": 19889,
+  "eval_examples": 2210,
+  "max_length": 128,
+  "epochs": 3,
+  "batch_size": 8,
+  "learning_rate": 2e-05
+}
