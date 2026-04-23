@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Rescue-AI Poster — Imagine RIT</title>
+<style>
+/* ── Print setup ── */
+@page { size: 36in 24in landscape; margin: 0; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 36in;
+  height: 24in;
+  background: #ffffff;
+  font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  overflow: hidden;
+}
+
+/* ── Colour tokens ── */
+:root {
+  --orange:  #F76900;
+  --red:     #DC2626;
+  --red-dk:  #991B1B;
+  --dark:    #0F172A;
+  --slate:   #1E293B;
+  --mid:     #475569;
+  --light:   #F1F5F9;
+  --border:  #E2E8F0;
+  --white:   #FFFFFF;
+}
+
+/* ── Poster grid ── */
+.poster {
+  width: 36in;
+  height: 24in;
+  display: grid;
+  grid-template-rows: 1.9in 12.6in 7.6in 1.9in;
+  grid-template-columns: 1fr;
+}
+
+/* ══════════════════════════════════════════
+   ROW 1 — HEADER
+══════════════════════════════════════════ */
+.header {
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5in;
+  border-bottom: 0.06in solid var(--red);
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.06in;
+}
+.rit-badge {
+  font-size: 0.28in;
+  font-weight: 800;
+  color: var(--orange);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.rit-sub {
+  font-size: 0.16in;
+  color: #94A3B8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.header-center { text-align: center; }
+.project-name {
+  font-size: 0.72in;
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.project-name span { color: var(--red); }
+.project-tagline {
+  font-size: 0.22in;
+  color: #CBD5E1;
+  margin-top: 0.06in;
+  letter-spacing: 0.03em;
+}
+
+.header-right { text-align: right; }
+.team-label {
+  font-size: 0.14in;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.06in;
+}
+.team-name {
+  font-size: 0.19in;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════
+   ROW 2 — MAIN CONTENT (3 cols)
+══════════════════════════════════════════ */
+.main {
+  display: grid;
+  grid-template-columns: 8.5in 18in 9.5in;
+  gap: 0;
+  border-bottom: 0.04in solid var(--border);
+}
+
+/* — Left col — */
+.col-left {
+  padding: 0.35in 0.3in 0.3in 0.45in;
+  border-right: 0.04in solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25in;
+}
+
+.section-title {
+  font-size: 0.18in;
+  font-weight: 800;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-left: 0.06in solid var(--orange);
+  padding-left: 0.12in;
+  margin-bottom: 0.1in;
+}
+
+.body-text {
+  font-size: 0.155in;
+  color: var(--slate);
+  line-height: 1.55;
+}
+
+.stat-row {
+  display: flex;
+  gap: 0.2in;
+}
+.stat-box {
+  flex: 1;
+  background: var(--light);
+  border-radius: 0.1in;
+  padding: 0.15in 0.12in;
+  text-align: center;
+  border-top: 0.05in solid var(--red);
+}
+.stat-num {
+  font-size: 0.35in;
+  font-weight: 900;
+  color: var(--red);
+  line-height: 1;
+}
+.stat-lbl {
+  font-size: 0.12in;
+  color: var(--mid);
+  margin-top: 0.04in;
+  line-height: 1.3;
+}
+
+.how-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.12in;
+  margin-bottom: 0.1in;
+}
+.step-num {
+  background: var(--red);
+  color: white;
+  font-size: 0.14in;
+  font-weight: 700;
+  width: 0.26in;
+  height: 0.26in;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.01in;
+}
+.step-text {
+  font-size: 0.145in;
+  color: var(--slate);
+  line-height: 1.45;
+}
+.step-text strong { color: var(--dark); }
+
+/* — Centre col (architecture) — */
+.col-center {
+  padding: 0.3in 0.35in;
+  border-right: 0.04in solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2in;
+}
+
+/* Architecture flow */
+.arch-phase {
+  background: var(--light);
+  border-radius: 0.12in;
+  padding: 0.2in 0.25in;
+  border: 0.03in solid var(--border);
+}
+.phase-label {
+  font-size: 0.14in;
+  font-weight: 800;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.12in;
+}
+
+.flow-row {
+  display: flex;
+  align-items: center;
+  gap: 0.08in;
+  flex-wrap: nowrap;
+}
+.flow-node {
+  background: var(--white);
+  border: 0.025in solid var(--border);
+  border-radius: 0.08in;
+  padding: 0.1in 0.14in;
+  text-align: center;
+  flex-shrink: 0;
+}
+.flow-node.red { border-color: var(--red); background: #FEF2F2; }
+.flow-node.orange { border-color: var(--orange); background: #FFF7ED; }
+.flow-node.blue { border-color: #2563EB; background: #EFF6FF; }
+.flow-node.green { border-color: #16A34A; background: #F0FDF4; }
+.flow-node.purple { border-color: #7C3AED; background: #F5F3FF; }
+.node-title {
+  font-size: 0.13in;
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1.2;
+}
+.node-sub {
+  font-size: 0.1in;
+  color: var(--mid);
+  margin-top: 0.03in;
+  line-height: 1.3;
+}
+.arrow {
+  font-size: 0.2in;
+  color: var(--mid);
+  flex-shrink: 0;
+}
+.arrow-down {
+  text-align: center;
+  font-size: 0.18in;
+  color: var(--mid);
+  margin: 0.04in 0;
+}
+
+/* AI score formula */
+.formula-box {
+  background: var(--dark);
+  border-radius: 0.12in;
+  padding: 0.18in 0.22in;
+  color: white;
+}
+.formula-title {
+  font-size: 0.14in;
+  font-weight: 700;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.1in;
+}
+.formula-eq {
+  font-size: 0.18in;
+  font-weight: 700;
+  color: white;
+  font-family: 'Courier New', monospace;
+  line-height: 1.4;
+}
+.formula-eq .f-red { color: #F87171; }
+.formula-eq .f-orange { color: #FB923C; }
+.formula-eq .f-blue { color: #60A5FA; }
+
+.formula-parts {
+  display: flex;
+  gap: 0.15in;
+  margin-top: 0.12in;
+}
+.formula-part {
+  flex: 1;
+  text-align: center;
+}
+.fp-val {
+  font-size: 0.24in;
+  font-weight: 900;
+  line-height: 1;
+}
+.fp-lbl {
+  font-size: 0.1in;
+  color: #94A3B8;
+  margin-top: 0.03in;
+}
+
+/* — Right col — */
+.col-right {
+  padding: 0.35in 0.35in 0.3in 0.3in;
+  display: flex;
+  flex-direction: column;
+  gap: 0.22in;
+}
+
+.feature-item {
+  display: flex;
+  gap: 0.14in;
+  align-items: flex-start;
+}
+.feat-icon {
+  font-size: 0.25in;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 0.01in;
+}
+.feat-text { flex: 1; }
+.feat-title {
+  font-size: 0.155in;
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1.2;
+}
+.feat-desc {
+  font-size: 0.13in;
+  color: var(--mid);
+  line-height: 1.4;
+  margin-top: 0.03in;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.1in;
+}
+.tech-chip {
+  background: var(--light);
+  border-radius: 0.06in;
+  padding: 0.08in 0.12in;
+  font-size: 0.125in;
+  font-weight: 600;
+  color: var(--slate);
+  border: 0.02in solid var(--border);
+  text-align: center;
+}
+.tech-chip.highlight { background: var(--dark); color: white; border-color: var(--dark); }
+
+/* ══════════════════════════════════════════
+   ROW 3 — UI SHOWCASE
+══════════════════════════════════════════ */
+.showcase {
+  display: grid;
+  grid-template-columns: 19in 8.5in 8.5in;
+  gap: 0;
+  border-bottom: 0.04in solid var(--border);
+}
+
+.showcase-panel {
+  padding: 0.25in;
+  border-right: 0.04in solid var(--border);
+}
+.showcase-panel:last-child { border-right: none; }
+
+.panel-label {
+  font-size: 0.14in;
+  font-weight: 800;
+  color: var(--mid);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.15in;
+  display: flex;
+  align-items: center;
+  gap: 0.1in;
+}
+.panel-label::before {
+  content: '';
+  display: block;
+  width: 0.05in;
+  height: 0.18in;
+  background: var(--red);
+  border-radius: 0.03in;
+}
+
+/* ─── Dashboard UI mockup ─── */
+.ui-dashboard {
+  height: 5.8in;
+  background: #0F172A;
+  border-radius: 0.12in;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0.05in 0.2in rgba(0,0,0,0.15);
+}
+.ui-topbar {
+  background: #1E293B;
+  padding: 0.1in 0.2in;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.02in solid #334155;
+}
+.ui-logo { font-size: 0.14in; font-weight: 800; color: #EF4444; letter-spacing: 0.04em; }
+.ui-stats { display: flex; gap: 0.2in; }
+.ui-stat { text-align: center; }
+.ui-stat-n { font-size: 0.15in; font-weight: 700; color: white; }
+.ui-stat-l { font-size: 0.09in; color: #64748B; }
+.ui-live { display: flex; align-items: center; gap: 0.05in; font-size: 0.1in; color: #4ADE80; font-weight: 600; }
+.ui-dot { width: 0.08in; height: 0.08in; background: #4ADE80; border-radius: 50%; }
+
+.ui-body { display: flex; flex: 1; overflow: hidden; }
+.ui-map {
+  flex: 1;
+  background: #1a2744;
+  position: relative;
+  overflow: hidden;
+}
+/* Map grid lines */
+.ui-map::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 0.4in 0.4in;
+}
+/* Roads */
+.ui-map::after {
+  content: '';
+  position: absolute;
+  top: 40%; left: 0; right: 0; height: 0.04in;
+  background: rgba(255,255,255,0.12);
+}
+
+/* Map markers */
+.map-marker {
+  position: absolute;
+  border-radius: 50%;
+  border: 0.03in solid white;
+  opacity: 0.9;
+}
+
+.ui-sidebar {
+  width: 3.2in;
+  background: #1E293B;
+  display: flex;
+  flex-direction: column;
+  border-left: 0.02in solid #334155;
+}
+.ui-submit-btn {
+  margin: 0.1in;
+  background: #DC2626;
+  color: white;
+  border-radius: 0.06in;
+  padding: 0.1in;
+  text-align: center;
+  font-size: 0.12in;
+  font-weight: 700;
+}
+.ui-reports { flex: 1; overflow: hidden; }
+.ui-report-item {
+  padding: 0.1in 0.12in;
+  border-bottom: 0.01in solid #334155;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.08in;
+  border-left: 0.04in solid transparent;
+}
+.ui-report-item.critical { border-left-color: #EF4444; background: rgba(239,68,68,0.06); }
+.ui-report-item.high { border-left-color: #F97316; background: rgba(249,115,22,0.04); }
+.ui-report-item.medium { border-left-color: #EAB308; }
+.ui-report-text { flex: 1; }
+.ui-rtext { font-size: 0.1in; color: #E2E8F0; line-height: 1.3; }
+.ui-rcat { font-size: 0.09in; color: #64748B; margin-top: 0.02in; }
+.ui-badge {
+  font-size: 0.1in;
+  font-weight: 700;
+  padding: 0.02in 0.06in;
+  border-radius: 0.04in;
+  color: white;
+  flex-shrink: 0;
+}
+.bg-red { background: #EF4444; }
+.bg-orange { background: #F97316; }
+.bg-yellow { background: #D97706; }
+.bg-green { background: #16A34A; }
+
+/* ─── Citizen form mockup ─── */
+.ui-citizen {
+  height: 5.8in;
+  background: #0F172A;
+  border-radius: 0.12in;
+  overflow: hidden;
+  box-shadow: 0 0.05in 0.2in rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
+.cit-header {
+  background: #DC2626;
+  padding: 0.18in 0.2in;
+}
+.cit-title { font-size: 0.16in; font-weight: 700; color: white; }
+.cit-sub { font-size: 0.1in; color: rgba(255,255,255,0.75); margin-top: 0.03in; line-height: 1.3; }
+.cit-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  font-size: 0.09in;
+  padding: 0.03in 0.08in;
+  border-radius: 99px;
+  margin-top: 0.06in;
+  font-weight: 600;
+}
+.cit-body { padding: 0.15in; display: flex; flex-direction: column; gap: 0.12in; flex: 1; }
+.cit-label { font-size: 0.09in; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.04in; }
+.cit-field {
+  width: 100%;
+  background: #1E293B;
+  border: 0.02in solid #334155;
+  border-radius: 0.05in;
+  padding: 0.08in 0.1in;
+  color: #94A3B8;
+  font-size: 0.1in;
+}
+.cit-field.tall { height: 0.7in; }
+.cit-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.1in; }
+.cit-offline {
+  background: rgba(249,115,22,0.15);
+  border: 0.02in solid #F97316;
+  border-radius: 0.05in;
+  padding: 0.08in 0.1in;
+  font-size: 0.09in;
+  color: #FDBA74;
+  display: flex;
+  align-items: center;
+  gap: 0.06in;
+}
+.cit-btn {
+  background: #DC2626;
+  color: white;
+  border-radius: 0.06in;
+  padding: 0.1in;
+  text-align: center;
+  font-size: 0.12in;
+  font-weight: 700;
+}
+
+/* ─── Phase 2 mesh mockup ─── */
+.ui-mesh {
+  height: 5.8in;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15in;
+}
+
+.mesh-flow {
+  flex: 1;
+  background: var(--light);
+  border-radius: 0.12in;
+  padding: 0.2in;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 0.03in solid var(--border);
+}
+
+.mesh-row {
+  display: flex;
+  align-items: center;
+  gap: 0.1in;
+}
+.mesh-node {
+  flex: 1;
+  background: white;
+  border-radius: 0.1in;
+  padding: 0.12in 0.1in;
+  text-align: center;
+  border: 0.03in solid var(--border);
+}
+.mesh-node.m-citizen { border-color: #2563EB; background: #EFF6FF; }
+.mesh-node.m-relay   { border-color: var(--orange); background: #FFF7ED; }
+.mesh-node.m-hub     { border-color: var(--red); background: #FEF2F2; }
+.mesh-node.m-dash    { border-color: #16A34A; background: #F0FDF4; }
+.mesh-icon { font-size: 0.3in; }
+.mesh-title { font-size: 0.115in; font-weight: 700; color: var(--dark); margin-top: 0.04in; line-height: 1.2; }
+.mesh-sub { font-size: 0.09in; color: var(--mid); margin-top: 0.02in; line-height: 1.3; }
+.mesh-arrow { font-size: 0.22in; color: var(--mid); flex-shrink: 0; }
+.mesh-note {
+  background: var(--dark);
+  border-radius: 0.08in;
+  padding: 0.12in 0.15in;
+  display: flex;
+  align-items: center;
+  gap: 0.12in;
+}
+.mesh-note-icon { font-size: 0.22in; }
+.mesh-note-text { font-size: 0.115in; color: white; line-height: 1.4; font-weight: 500; }
+.mesh-note-text strong { color: var(--orange); }
+
+/* ══════════════════════════════════════════
+   ROW 4 — FOOTER
+══════════════════════════════════════════ */
+.footer {
+  background: var(--dark);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 0 0.45in;
+  gap: 0.2in;
+}
+
+.footer-block { display: flex; flex-direction: column; gap: 0.04in; }
+.footer-label {
+  font-size: 0.1in;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+.footer-val {
+  font-size: 0.14in;
+  color: white;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.footer-val.big {
+  font-size: 0.32in;
+  font-weight: 900;
+  color: #4ADE80;
+  line-height: 1;
+}
+.footer-divider {
+  width: 0.02in;
+  height: 0.9in;
+  background: #334155;
+}
+.footer-center { text-align: center; }
+.footer-logo {
+  font-size: 0.28in;
+  font-weight: 900;
+  color: white;
+  letter-spacing: -0.01em;
+}
+.footer-logo span { color: var(--red); }
+.footer-url { font-size: 0.11in; color: #64748B; margin-top: 0.04in; }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <!-- ══ ROW 1: HEADER ══ -->
+  <div class="header">
+    <div class="header-left">
+      <div class="rit-badge">⬛ IMAGINE RIT</div>
+      <div class="rit-sub">Rochester Institute of Technology · 2025</div>
+    </div>
+
+    <div class="header-center">
+      <div class="project-name"><span>RESCUE</span>-AI</div>
+      <div class="project-tagline">AI-Powered Disaster Response Coordinator</div>
+    </div>
+
+    <div class="header-right">
+      <div class="team-label">Team</div>
+      <div class="team-name">
+        Neha Rani<br>
+        Samhita Gadamsetty<br>
+        Vedant Tolia
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ROW 2: MAIN CONTENT ══ -->
+  <div class="main">
+
+    <!-- LEFT: Problem + How it works -->
+    <div class="col-left">
+      <div>
+        <div class="section-title">The Problem</div>
+        <p class="body-text">
+          During major disasters, emergency services are flooded with thousands of calls
+          and reports simultaneously. Human operators cannot quickly triage which
+          situations are life-threatening. Every second of delay costs lives.
+        </p>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-num">97.4%</div>
+          <div class="stat-lbl">Image classifier accuracy (ResNet50)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">&lt;2s</div>
+          <div class="stat-lbl">AI triage time per report</div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-num">7</div>
+          <div class="stat-lbl">Emergency severity classes</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">2</div>
+          <div class="stat-lbl">Deployment phases (online + offline)</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">How It Works</div>
+        <div>
+          <div class="how-step">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Citizen submits</strong> a report — text description, GPS location, and an optional photo of the disaster site</div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>AI analyzes</strong> the text (DistilBERT NLP) and the image (ResNet50 vision) simultaneously</div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Priority score</strong> computed from NLP confidence, image severity, and GPS cluster density</div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">4</div>
+            <div class="step-text"><strong>Dashboard updates live</strong> — responders see AI-ranked alerts on an interactive map and dispatch help instantly</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER: Architecture diagrams -->
+    <div class="col-center">
+      <div class="section-title" style="border-left-color:var(--red)">System Architecture</div>
+
+      <!-- Phase 1 flow -->
+      <div class="arch-phase">
+        <div class="phase-label">Phase 1 — Internet Path</div>
+        <div class="flow-row">
+          <div class="flow-node blue">
+            <div class="node-title">🧑 Citizen</div>
+            <div class="node-sub">Web form<br>Photo + GPS</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="flow-node orange">
+            <div class="node-title">⚡ FastAPI</div>
+            <div class="node-sub">REST backend<br>Port 8000</div>
+          </div>
+          <div class="arrow">→</div>
+          <div style="display:flex;flex-direction:column;gap:0.06in;">
+            <div class="flow-node red" style="padding:0.07in 0.1in;">
+              <div class="node-title">🧠 DistilBERT</div>
+              <div class="node-sub">NLP · 7 classes · text score</div>
+            </div>
+            <div class="flow-node red" style="padding:0.07in 0.1in;">
+              <div class="node-title">👁 ResNet50</div>
+              <div class="node-sub">Vision · 5 classes · image score</div>
+            </div>
+            <div class="flow-node" style="padding:0.07in 0.1in;">
+              <div class="node-title">📍 GPS Cluster</div>
+              <div class="node-sub">Location risk · 500m radius</div>
+            </div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="flow-node purple">
+            <div class="node-title">⚖️ Priority</div>
+            <div class="node-sub">Score 0–10<br>formula below</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="flow-node green">
+            <div class="node-title">📊 Dashboard</div>
+            <div class="node-sub">React 18<br>WebSocket live</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2 flow -->
+      <div class="arch-phase">
+        <div class="phase-label">Phase 2 — Mesh Network (No Internet)</div>
+        <div class="flow-row">
+          <div class="flow-node blue">
+            <div class="node-title">📱 Phone</div>
+            <div class="node-sub">Local WiFi<br>No internet</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="flow-node orange">
+            <div class="node-title">📡 Relay Node</div>
+            <div class="node-sub">Edge device<br>SQLite queue</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="flow-node" style="background:#F8FAFC;">
+            <div class="node-title">🔄 Store &amp; Forward</div>
+            <div class="node-sub">Caches locally<br>Syncs when connected</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="flow-node orange">
+            <div class="node-title">⚡ FastAPI Hub</div>
+            <div class="node-sub">POST /sync<br>Batch process</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="flow-node green">
+            <div class="node-title">📊 Dashboard</div>
+            <div class="node-sub">Live updates<br>unchanged</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formula -->
+      <div class="formula-box">
+        <div class="formula-title">⚖️ AI Priority Score Formula</div>
+        <div class="formula-eq">
+          FinalPriority &nbsp;=&nbsp;
+          <span class="f-red">(TextScore × 0.6)</span> &nbsp;+&nbsp;
+          <span class="f-orange">(ImageScore × 0.3)</span> &nbsp;+&nbsp;
+          <span class="f-blue">(LocationRisk × 0.1)</span>
+        </div>
+        <div class="formula-parts">
+          <div class="formula-part">
+            <div class="fp-val" style="color:#F87171;">60%</div>
+            <div class="fp-lbl">NLP text analysis<br>DistilBERT confidence</div>
+          </div>
+          <div class="formula-part">
+            <div class="fp-val" style="color:#FB923C;">30%</div>
+            <div class="fp-lbl">Image damage<br>ResNet50 severity</div>
+          </div>
+          <div class="formula-part">
+            <div class="fp-val" style="color:#60A5FA;">10%</div>
+            <div class="fp-lbl">Location density<br>GPS cluster risk</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: Features + tech -->
+    <div class="col-right">
+      <div>
+        <div class="section-title">Key Features</div>
+        <div class="feature-item">
+          <div class="feat-icon">🧠</div>
+          <div class="feat-text">
+            <div class="feat-title">Dual AI Engine</div>
+            <div class="feat-desc">DistilBERT NLP classifies crisis text into 7 severity levels. ResNet50 vision detects fire, floods, collapses from photos.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feat-icon">⚡</div>
+          <div class="feat-text">
+            <div class="feat-title">Real-time WebSocket Dashboard</div>
+            <div class="feat-desc">Reports appear live on an interactive Leaflet map as they arrive. No page refresh needed.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feat-icon">📍</div>
+          <div class="feat-text">
+            <div class="feat-title">Location-aware Clustering</div>
+            <div class="feat-desc">Multiple reports from the same area amplify the priority score automatically. Haversine 500m radius detection.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feat-icon">📡</div>
+          <div class="feat-text">
+            <div class="feat-title">Offline Mesh Network</div>
+            <div class="feat-desc">Works without internet. Relay nodes collect reports via local WiFi, cache in SQLite, sync to hub when connected.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feat-icon">🔴</div>
+          <div class="feat-text">
+            <div class="feat-title">AI Reasoning Transparency</div>
+            <div class="feat-desc">Every report shows full AI breakdown: NLP class + confidence, image damage class, score formula, cluster info.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">Tech Stack</div>
+        <div class="tech-grid">
+          <div class="tech-chip highlight">Python 3.11</div>
+          <div class="tech-chip highlight">FastAPI</div>
+          <div class="tech-chip highlight">DistilBERT</div>
+          <div class="tech-chip highlight">ResNet-50</div>
+          <div class="tech-chip">React 18</div>
+          <div class="tech-chip">Leaflet.js</div>
+          <div class="tech-chip">SQLite</div>
+          <div class="tech-chip">WebSocket</div>
+          <div class="tech-chip">PyTorch</div>
+          <div class="tech-chip">HuggingFace</div>
+          <div class="tech-chip">TailwindCSS</div>
+          <div class="tech-chip">Docker</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end .main -->
+
+  <!-- ══ ROW 3: UI SHOWCASE ══ -->
+  <div class="showcase">
+
+    <!-- DASHBOARD MOCKUP -->
+    <div class="showcase-panel">
+      <div class="panel-label">Live Responder Dashboard</div>
+      <div class="ui-dashboard">
+        <div class="ui-topbar">
+          <div class="ui-logo">AI DISASTER RESPONSE &nbsp;·&nbsp; COORDINATOR</div>
+          <div class="ui-stats">
+            <div class="ui-stat"><div class="ui-stat-n">59</div><div class="ui-stat-l">Total</div></div>
+            <div class="ui-stat"><div class="ui-stat-n" style="color:#FACC15">59</div><div class="ui-stat-l">Pending</div></div>
+            <div class="ui-stat"><div class="ui-stat-n" style="color:#F87171">8</div><div class="ui-stat-l">Critical</div></div>
+            <div class="ui-stat"><div class="ui-stat-n" style="color:#4ADE80">0</div><div class="ui-stat-l">Dispatched</div></div>
+          </div>
+          <div class="ui-live"><div class="ui-dot"></div>LIVE</div>
+        </div>
+        <div class="ui-body">
+          <!-- Map area -->
+          <div class="ui-map">
+            <!-- Simulated map markers -->
+            <div class="map-marker" style="width:0.28in;height:0.28in;background:#EF4444;top:28%;left:38%;"></div>
+            <div class="map-marker" style="width:0.24in;height:0.24in;background:#EF4444;top:42%;left:55%;"></div>
+            <div class="map-marker" style="width:0.22in;height:0.22in;background:#F97316;top:60%;left:44%;"></div>
+            <div class="map-marker" style="width:0.18in;height:0.18in;background:#F97316;top:35%;left:65%;"></div>
+            <div class="map-marker" style="width:0.18in;height:0.18in;background:#EAB308;top:55%;left:30%;"></div>
+            <div class="map-marker" style="width:0.16in;height:0.16in;background:#EAB308;top:70%;left:58%;"></div>
+            <div class="map-marker" style="width:0.14in;height:0.14in;background:#16A34A;top:22%;left:72%;"></div>
+            <div class="map-marker" style="width:0.14in;height:0.14in;background:#16A34A;top:75%;left:40%;"></div>
+            <div class="map-marker" style="width:0.14in;height:0.14in;background:#EF4444;top:48%;left:25%;"></div>
+            <!-- Map legend -->
+            <div style="position:absolute;bottom:0.12in;left:0.12in;background:rgba(15,23,42,0.85);border-radius:0.06in;padding:0.08in 0.12in;">
+              <div style="display:flex;gap:0.12in;align-items:center;">
+                <div style="display:flex;align-items:center;gap:0.05in;"><div style="width:0.1in;height:0.1in;background:#EF4444;border-radius:50%;"></div><span style="font-size:0.09in;color:#E2E8F0">Critical</span></div>
+                <div style="display:flex;align-items:center;gap:0.05in;"><div style="width:0.1in;height:0.1in;background:#F97316;border-radius:50%;"></div><span style="font-size:0.09in;color:#E2E8F0">High</span></div>
+                <div style="display:flex;align-items:center;gap:0.05in;"><div style="width:0.1in;height:0.1in;background:#EAB308;border-radius:50%;"></div><span style="font-size:0.09in;color:#E2E8F0">Medium</span></div>
+                <div style="display:flex;align-items:center;gap:0.05in;"><div style="width:0.1in;height:0.1in;background:#16A34A;border-radius:50%;"></div><span style="font-size:0.09in;color:#E2E8F0">Low</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Sidebar -->
+          <div class="ui-sidebar">
+            <div class="ui-submit-btn">+ Submit Report</div>
+            <div class="ui-reports">
+              <div class="ui-report-item critical">
+                <div class="ui-text" style="flex:1"><div class="ui-rtext">Building collapsed, 3 people trapped inside cannot move</div><div class="ui-rcat">people trapped · 43.083, -76.147</div></div>
+                <div class="ui-badge bg-red">6.0</div>
+              </div>
+              <div class="ui-report-item critical">
+                <div style="flex:1"><div class="ui-rtext">Person buried under rubble after building wall fell</div><div class="ui-rcat">people trapped</div></div>
+                <div class="ui-badge bg-red">5.9</div>
+              </div>
+              <div class="ui-report-item critical">
+                <div style="flex:1"><div class="ui-rtext">Person with serious injuries after bridge structural failure</div><div class="ui-rcat">injured people</div></div>
+                <div class="ui-badge bg-red">5.5</div>
+              </div>
+              <div class="ui-report-item high">
+                <div style="flex:1"><div class="ui-rtext">Large fire at warehouse, smoke visible for miles</div><div class="ui-rcat">fire damage</div></div>
+                <div class="ui-badge bg-orange">5.1</div>
+              </div>
+              <div class="ui-report-item high">
+                <div style="flex:1"><div class="ui-rtext">Car overturned on highway, driver injured and conscious</div><div class="ui-rcat">injured people</div></div>
+                <div class="ui-badge bg-orange">5.1</div>
+              </div>
+              <div class="ui-report-item medium">
+                <div style="flex:1"><div class="ui-rtext">Downed power line in park area, sparking near populated zone</div><div class="ui-rcat">infrastructure collapse</div></div>
+                <div class="ui-badge bg-yellow">4.6</div>
+              </div>
+              <div class="ui-report-item medium">
+                <div style="flex:1"><div class="ui-rtext">Severe flooding on University Ave, families stranded</div><div class="ui-rcat">flood damage</div></div>
+                <div class="ui-badge bg-yellow">4.0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CITIZEN FORM MOCKUP -->
+    <div class="showcase-panel">
+      <div class="panel-label">Citizen Report Form</div>
+      <div class="ui-citizen">
+        <div class="cit-header">
+          <div class="cit-title">🆘 Submit Disaster Report</div>
+          <div class="cit-sub">Report goes directly to AI triage.<br>Works offline via mesh relay.</div>
+          <span class="cit-badge">📴 OFFLINE — saving locally</span>
+        </div>
+        <div class="cit-body">
+          <div>
+            <div class="cit-label">Describe the situation *</div>
+            <div class="cit-field tall" style="color:#64748B;padding-top:0.06in;">Building collapsed on Oak Street, at least 4 people trapped under debris...</div>
+          </div>
+          <div class="cit-row">
+            <div>
+              <div class="cit-label">Latitude</div>
+              <div class="cit-field">43.083142</div>
+            </div>
+            <div>
+              <div class="cit-label">Longitude</div>
+              <div class="cit-field">-76.147401</div>
+            </div>
+          </div>
+          <div>
+            <div class="cit-label">Photo (optional)</div>
+            <div class="cit-field" style="color:#64748B;">📷 collapse_photo.jpg</div>
+          </div>
+          <div class="cit-offline">
+            <span>📴</span>
+            <span>Offline — report saved locally. Auto-syncs when reconnected. (3 queued)</span>
+          </div>
+          <div class="cit-btn">Save Offline</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2 MESH -->
+    <div class="showcase-panel" style="border-right:none">
+      <div class="panel-label">Phase 2 — Mesh Relay Network</div>
+      <div class="ui-mesh">
+        <div class="mesh-flow">
+          <div style="font-size:0.13in;font-weight:700;color:var(--slate);margin-bottom:0.05in;">When cell towers are down...</div>
+          <div class="mesh-row">
+            <div class="mesh-node m-citizen">
+              <div class="mesh-icon">📱</div>
+              <div class="mesh-title">Citizen Phone</div>
+              <div class="mesh-sub">Connects via local WiFi · no internet</div>
+            </div>
+            <div class="mesh-arrow">→</div>
+            <div class="mesh-node m-relay">
+              <div class="mesh-icon">📡</div>
+              <div class="mesh-title">Relay Node</div>
+              <div class="mesh-sub">Laptop / Raspberry Pi · stores locally</div>
+            </div>
+          </div>
+          <div style="text-align:center;font-size:0.18in;color:var(--mid);">↓ <span style="font-size:0.11in;color:var(--mid);">when connectivity restored</span></div>
+          <div class="mesh-row">
+            <div class="mesh-node m-hub">
+              <div class="mesh-icon">⚡</div>
+              <div class="mesh-title">AI Hub</div>
+              <div class="mesh-sub">POST /sync → AI pipeline runs</div>
+            </div>
+            <div class="mesh-arrow">→</div>
+            <div class="mesh-node m-dash">
+              <div class="mesh-icon">📊</div>
+              <div class="mesh-title">Dashboard</div>
+              <div class="mesh-sub">Live updates · unchanged</div>
+            </div>
+          </div>
+        </div>
+        <div class="mesh-note">
+          <div class="mesh-note-icon">✅</div>
+          <div class="mesh-note-text"><strong>Zero AI changes</strong> — only the data ingestion layer is swapped. NLP, Vision, Priority Engine, and Dashboard are completely untouched.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end .showcase -->
+
+  <!-- ══ ROW 4: FOOTER ══ -->
+  <div class="footer">
+    <div class="footer-block">
+      <div class="footer-label">Accuracy</div>
+      <div class="footer-val big">97.4%</div>
+      <div class="footer-val" style="font-size:0.11in;color:#64748B;">ResNet50 on AIDER dataset<br>22k CrisisNLP training examples</div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-block">
+      <div class="footer-label">Emergency Classes</div>
+      <div class="footer-val" style="font-size:0.12in;line-height:1.6;color:#CBD5E1;">
+        🔴 People Trapped &nbsp;·&nbsp; 🔴 Injured<br>
+        🟠 Infrastructure &nbsp;·&nbsp; 🟠 Fire<br>
+        🟡 Flood &nbsp;·&nbsp; 🟡 Rescue Request &nbsp;·&nbsp; 🟢 Low
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-block footer-center">
+      <div class="footer-logo"><span>RESCUE</span>-AI</div>
+      <div class="footer-url">github.com/gsam99/Disaster-Management-System</div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-block">
+      <div class="footer-label">Built With</div>
+      <div class="footer-val" style="font-size:0.12in;line-height:1.6;color:#CBD5E1;">
+        Python · FastAPI · React 18<br>
+        DistilBERT · ResNet-50 · PyTorch<br>
+        Leaflet.js · SQLite · Docker
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-block" style="text-align:right;">
+      <div class="footer-label">Team</div>
+      <div class="footer-val">Neha Rani</div>
+      <div class="footer-val">Samhita Gadamsetty</div>
+      <div class="footer-val">Vedant Tolia</div>
+      <div style="margin-top:0.08in;font-size:0.11in;color:var(--orange);font-weight:700;">IMAGINE RIT · 2025</div>
+    </div>
+  </div>
+
+</div><!-- end .poster -->
+</body>
+</html>
