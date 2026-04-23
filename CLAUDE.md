@@ -1,133 +1,232 @@
 # AI Disaster Response Coordinator — Project Context for Claude
 
 ## What This Is
-An AI-powered disaster response system built for **Imagine RIT** (university showcase/competition) and real-world deployment. Citizens submit disaster reports (text + image + GPS). AI ranks them by urgency and displays them on a live emergency dashboard for responders.
+An AI-powered disaster response system built for **Imagine RIT** and real-world deployment. Citizens submit disaster reports (text + image + GPS). AI ranks them by urgency. Responders see a live emergency dashboard. Works offline via a mesh relay network (Phase 2).
 
-**Build time:** 3 weeks. **Current phase:** Phase 1 (AI Demo).
+**Both Phase 1 and Phase 2 are complete and working.**
 
-## Team & Ownership
-- **ikshaa (Neha)** — AI/image models (`ai-models/`) — ResNet50 image classifier done
-- **gsam99** — NLP/text AI (`model/`) — DistilBERT classifier done
+---
+
+## Team
+- **ikshaa (Neha)** — AI image models (`ai-models/`), full-stack integration, Phase 2 mesh
+- **gsam99** — NLP/text AI (`model/`), DistilBERT classifier
 - **[3rd teammate]** — TBD
 
-## Architecture (5 Layers)
+GitHub: `https://github.com/gsam99/Disaster-Management-System` · branch: `feature/ai-models`
+
+---
+
+## Architecture
+
 ```
-Layer 1 — INPUT:        Citizen web form / Android app / Report simulator
-Layer 2 — BACKEND:      Python FastAPI + Uvicorn + CORS
-Layer 3 — INTELLIGENCE: NLP Classifier + Vision Model + Score Aggregator
-Layer 4 — STORAGE:      SQLite (dev) → PostgreSQL (prod) + Redis cache
-Layer 5 — OUTPUT:       React 18 dashboard + Leaflet.js map + WebSocket live feed
+PHASE 1 (internet)
+  Citizen web form → FastAPI backend → AI pipeline → WebSocket → React dashboard
+
+PHASE 2 (no internet)
+  Citizen phone → Mesh Relay Node (local WiFi) → stores locally
+                  → sync when connected → same AI pipeline → dashboard
 ```
 
+**5-layer design:**
+```
+Layer 1 — INPUT:        Web form / Citizen PWA / Relay node / Simulator
+Layer 2 — BACKEND:      Python FastAPI + Uvicorn + CORS + WebSocket
+Layer 3 — INTELLIGENCE: DistilBERT NLP + ResNet50 Vision + Priority Engine
+Layer 4 — STORAGE:      SQLite (dev) → PostgreSQL (prod)
+Layer 5 — OUTPUT:       React 18 dashboard + Leaflet.js map + live feed
+```
+
+---
+
 ## Tech Stack
+
 | Area | Technologies |
 |------|-------------|
-| Frontend | React 18, Leaflet.js, TailwindCSS, Axios, socket.io-client, Recharts |
-| Backend | Python 3.11, FastAPI, Uvicorn, SQLAlchemy, Alembic, python-multipart |
-| AI/ML | DistilBERT, HuggingFace Transformers, YOLOv8, PyTorch, scikit-learn |
-| Database | SQLite (Phase 1), PostgreSQL (Phase 2), Redis |
-| DevOps | Docker, Docker Compose, GitHub Actions CI, pytest |
+| Frontend | React 18, Leaflet.js, TailwindCSS, Axios, native WebSocket |
+| Backend | Python 3.11+, FastAPI, Uvicorn, SQLAlchemy, python-multipart |
+| AI/ML | DistilBERT (HuggingFace Transformers), ResNet50 (PyTorch/torchvision), NLTK fallback |
+| Database | SQLite (dev) — file: `backend/disaster_reports.db` |
+| Mesh | FastAPI relay node, SQLite queue, httpx for sync |
+| DevOps | Docker, Docker Compose, `start.sh` |
+
+---
 
 ## AI Priority Score Formula
 ```
 FinalPriority = (TextScore × 0.6) + (ImageScore × 0.3) + (LocationRisk × 0.1)
-```
-- LocationRisk increases when multiple reports cluster within 500m radius
-- Score range: 0.0 – 10.0
 
-## Emergency Classification
-| Class | Score | Level | Keywords |
-|-------|-------|-------|----------|
-| Trapped Person | 10/10 | CRITICAL | trapped, buried, stuck, cannot move |
-| Severe Injury | 9/10 | CRITICAL | bleeding, unconscious, dying, severe |
-| Infrastructure Collapse | 8/10 | HIGH | collapsed, structural, building down |
-| Flooding / Fire | 6/10 | MEDIUM | flood, fire, smoke, burning, water |
-| Minor Issue | 3/10 | LOW | road, debris, minor, small damage |
-
-## API Endpoints (to build)
-| Method | Endpoint | Purpose |
-|--------|----------|---------|
-| POST | /api/v1/reports | Submit report (text + image + GPS) |
-| GET | /api/v1/reports | List all reports (paginated) |
-| GET | /api/v1/reports/{id} | Full report + AI reasoning |
-| GET | /api/v1/prioritized | All reports sorted by priority |
-| POST | /api/v1/reports/{id}/dispatch | Mark dispatched, emit WebSocket event |
-| GET | /api/v1/hotspots | Clustered GPS coords for heatmap |
-| WS | /ws/live | Real-time push to all dashboards |
-
-## Target File Structure (what needs to be built)
-```
-disaster-response/
-  backend/
-    main.py                        # FastAPI entry point
-    api/routes.py                  # All endpoints
-    api/models.py                  # Pydantic schemas
-    ai/nlp_classifier.py           # DistilBERT text scoring
-    ai/vision_assessor.py          # YOLOv8 image analysis
-    ai/priority_engine.py          # Score aggregator
-    ai/keyword_fallback.py         # Rule-based fallback (no GPU)
-    db/database.py                 # SQLAlchemy setup
-    db/crud.py                     # DB operations
-    db/schemas.py                  # Table definitions
-    requirements.txt
-    .env
-  frontend/src/
-    components/Dashboard.jsx
-    components/ReportMap.jsx       # Leaflet + heatmap
-    components/PriorityList.jsx    # Ranked alert list
-    components/ReportDetail.jsx    # AI reasoning modal
-    components/ReportForm.jsx      # Citizen submission
-    services/api.js                # Axios calls
-    services/websocket.js          # Live updates
-  simulator/generate_reports.py   # Batch fake reports for demo
-  docker-compose.yml
+TextScore    = base_score × nlp_confidence   (0–10)
+ImageScore   = base_score × vision_conf      (0–10, 0 if no image)
+LocationRisk = f(reports within 500m radius) (0, 2, 5, 8, or 10)
 ```
 
-## What's Already Done
-- [x] ResNet50 image classifier (97.4% test accuracy) — `ai-models/src/`
-- [x] Data augmentation, EDA, preprocessing pipeline — `ai-models/src/`
-- [x] Trained model weights — `ai-models/outputs/best_model.pt`
-- [x] DistilBERT crisis tweet NLP classifier — `model/backend/ai/`
-- [x] CrisisNLP labeled dataset — `model/CrisisNLP_labeled_data_crowdflower/`
-- [x] Preprocessed text data — `model/data/clean.csv`
+---
 
-## What's Needed Next (Week 1 — Backend MVP)
-- [ ] FastAPI project setup with Docker Compose
-- [ ] POST /reports and GET /prioritized endpoints
-- [ ] Keyword-based text scoring fallback (no GPU needed)
-- [ ] Wire in existing DistilBERT model from `model/backend/ai/`
-- [ ] SQLite + SQLAlchemy setup with Alembic migrations
-- [ ] Test with 10 sample reports to verify priority ordering
+## Emergency Classes
 
-## Week 2 (Vision AI + Hotspots)
-- [ ] Wire in existing ResNet50 model from `ai-models/` as vision_assessor
-- [ ] Add YOLOv8 or use existing ResNet for damage classification
-- [ ] Image upload handling (multipart)
-- [ ] Priority score aggregator
-- [ ] GPS clustering for hotspot detection
-- [ ] AI reasoning JSON output
+| Class | Base Score | Level |
+|-------|-----------|-------|
+| People trapped | 10 | CRITICAL |
+| Injured people | 9 | CRITICAL |
+| Infrastructure collapse | 8 | HIGH |
+| Fire damage | 8 | HIGH |
+| Request for rescue | 7 | HIGH |
+| Flood damage | 6 | MEDIUM |
+| Low priority | 2 | LOW |
 
-## Week 3 (Dashboard + Demo)
-- [ ] React dashboard with priority-sorted list
-- [ ] Leaflet.js map with heatmap
-- [ ] WebSocket real-time feed
-- [ ] Report detail modal with AI reasoning
-- [ ] Report simulator script (20 fake alerts for demo)
-- [ ] Docker Compose deploy + demo rehearsal
+---
 
-## Phase 2 (After Imagine RIT)
-Replace only the input layer with Bluetooth/Wi-Fi Direct mesh network. Store-and-forward caching on mesh nodes. Zero changes to AI engine, scoring, or dashboard.
+## How to Run
+
+```bash
+# Full system (Phase 1)
+bash start.sh
+# → Backend: http://localhost:8000
+# → Dashboard: http://localhost:3000
+# → API docs: http://localhost:8000/docs
+# → Citizen PWA: http://localhost:3000/citizen
+
+# Phase 2 mesh relay node (separate terminal)
+source venv/bin/activate
+python -m uvicorn mesh.relay:app --port 8001 --reload
+# → Citizen relay form: http://localhost:8001
+
+# Demo simulator (fires 20 reports)
+source venv/bin/activate
+python simulator/generate_reports.py
+
+# Phase 2 demo (full mesh flow)
+python mesh/demo_mesh.py --reset
+```
+
+---
+
+## Complete File Map
+
+### Backend (`backend/`)
+| File | Purpose |
+|------|---------|
+| `main.py` | FastAPI app entry, WebSocket endpoint `/ws/live`, mounts `/uploads` |
+| `ws_manager.py` | ConnectionManager — broadcasts to all connected dashboards |
+| `requirements.txt` | fastapi, uvicorn, sqlalchemy, python-multipart, pillow, torch, transformers |
+| `ai/nlp_assessor.py` | Loads DistilBERT from `model/models/distilbert_crisis_classifier/`, falls back to keyword classifier. Hybrid: if DistilBERT downgrades to low-priority but keywords say otherwise, keyword wins. |
+| `ai/vision_assessor.py` | Loads ResNet50 from `ai-models/outputs/best_model.pt`. 5 classes: fire, flooded_areas, collapsed_building, traffic_incident, normal. Returns image_score 0–9. |
+| `ai/priority_engine.py` | `compute_location_risk()`, `compute_final_priority()`, `build_ai_reasoning()` |
+| `api/routes.py` | All endpoints + Phase 2 `POST /api/v1/mesh/sync` batch endpoint |
+| `api/models.py` | Pydantic: `ReportResponse`, `DispatchRequest`, `StatsResponse`, `HotspotResponse` |
+| `db/schemas.py` | SQLAlchemy ORM: `Report`, `DispatchLog` tables |
+| `db/database.py` | SQLite engine, `init_db()`, `get_db()` dependency |
+| `db/crud.py` | `create_report`, `get_report`, `get_prioritized`, `dispatch_report`, `get_hotspots`, `count_nearby_reports` (Haversine), `get_stats` |
+
+### Frontend (`frontend/src/`)
+| File | Purpose |
+|------|---------|
+| `App.jsx` | Routes: `/citizen` → CitizenForm, everything else → Dashboard. Registers SW in prod. |
+| `components/Dashboard.jsx` | Layout: map left, list right, modals overlay |
+| `components/ReportMap.jsx` | Leaflet map — colored CircleMarkers sized by priority, click → detail |
+| `components/PriorityList.jsx` | Scrollable list sorted by priority, color-coded severity badges |
+| `components/ReportForm.jsx` | Staff/citizen form in dashboard (text + lat/lng + image upload) |
+| `components/ReportDetail.jsx` | AI reasoning modal: NLP class, image class, score breakdown, Dispatch button |
+| `components/CitizenForm.jsx` | Phase 2 offline-capable PWA form at `/citizen`. Detects online/offline, queues to localStorage, auto-syncs. Configurable relay URL via ⚙ button. |
+| `services/api.js` | Axios calls: getPrioritized, getReport, getStats, getHotspots, submitReport, dispatchReport |
+| `services/websocket.js` | Auto-reconnecting WebSocket client, calls `onMessage(data)` for `new_report` / `report_updated` events |
+| `public/manifest.json` | PWA manifest — makes citizen form installable on phones |
+| `public/sw.js` | Service worker — caches app shell for offline viewing |
+
+### Mesh (`mesh/`)
+| File | Purpose |
+|------|---------|
+| `relay.py` | Standalone FastAPI server. Serves citizen HTML form at `/`. Endpoints: `/submit` (queue report), `/sync` (forward to hub), `/status`, `/queue`, `/reset`. Zero imports from `backend/`. Uses httpx to POST to hub's `/api/v1/reports` one-by-one on sync. |
+| `demo_mesh.py` | 7-step demo script: checks relay → submits 5 reports to relay → verifies hub doesn't see them → triggers sync → verifies hub now has them → shows prioritized list |
+
+### AI Models (existing, not changed)
+| File | Purpose |
+|------|---------|
+| `model/backend/ai/bert_classifier.py` | DistilBERT train + `classify(text)` + `analyze(text)` |
+| `model/backend/ai/nlp_classifier.py` | NLTK keyword classifier (fallback) |
+| `model/backend/ai/text_scoring.py` | `compute_text_score(category, confidence)` |
+| `ai-models/src/train.py` | ResNet50 training, `build_model()` — architecture must match `evaluate.py` |
+| `ai-models/src/evaluate.py` | `load_model(checkpoint_path, device)` — used by vision_assessor |
+
+---
+
+## Key Integration Points
+
+**NLP classifier path:** `backend/ai/nlp_assessor.py` → loads from `model/models/distilbert_crisis_classifier/` → fallback to keyword matching in same file.
+
+**Vision classifier path:** `backend/ai/vision_assessor.py` → loads checkpoint from `ai-models/outputs/best_model.pt` → must rebuild same ResNet50 architecture as in `ai-models/src/train.py`.
+
+**Mesh sync path:** `mesh/relay.py POST /sync` → calls `backend POST /api/v1/reports` per report (multipart) → same AI pipeline as direct submission.
+
+**WebSocket path:** Any new report → `crud.create_report()` → `manager.broadcast({"type": "new_report", ...})` → all connected dashboards update in real time.
+
+---
+
+## Model Weights (not in repo — too large)
+
+| Model | Path | Size | How to get |
+|-------|------|------|-----------|
+| ResNet50 | `ai-models/outputs/best_model.pt` | 210MB | Run `python ai-models/src/train.py` |
+| DistilBERT | `model/models/distilbert_crisis_classifier/model.safetensors` | 267MB | Run `python model/backend/ai/bert_classifier.py train` |
+
+Both models have graceful fallbacks — the system runs without them (lower accuracy).
+
+---
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/reports` | Submit report (multipart: text + image + GPS) |
+| GET | `/api/v1/reports` | List reports (`?status=pending&limit=50`) |
+| GET | `/api/v1/reports/{id}` | Full report + AI reasoning |
+| GET | `/api/v1/prioritized` | All reports sorted by priority |
+| POST | `/api/v1/reports/{id}/dispatch` | Mark dispatched + emit WebSocket |
+| GET | `/api/v1/hotspots` | GPS clusters for heatmap |
+| GET | `/api/v1/stats` | `{total, pending, dispatched, resolved, critical}` |
+| WS | `/ws/live` | Real-time feed |
+| POST | `/api/v1/mesh/sync` | Batch JSON reports from relay node |
+
+**Relay node (port 8001):**
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/` | Citizen HTML form |
+| POST | `/submit` | Queue report locally |
+| POST | `/sync?hub_url=...` | Sync all pending to hub |
+| GET | `/status` | Queue counts |
+| POST | `/reset` | Clear queue (demo resets) |
+
+---
 
 ## Demo Script (Imagine RIT)
-1. Open empty dashboard: "Right now there's no disaster. Let's simulate one."
-2. Run simulator → 20 reports appear live via WebSocket
-3. Show auto-ranking: "AI ranked 20 messages in under one second"
-4. Show map heatmap cluster: "AI amplifying urgency automatically"
-5. Click top report → show AI reasoning panel (keywords, confidence, score)
-6. Submit live: type "3 people trapped, building collapsed" → watch it jump to #1
-7. Mention Phase 2: "This runs offline over mesh in a real disaster zone"
 
-## Database Schema (key tables)
-- **reports**: id, timestamp, text_message, image_path, lat, lng, text_score, image_score, location_risk, final_priority, ai_reasoning (JSON), status
-- **hotspot_clusters**: id, center_lat, center_lng, report_count, avg_priority, updated_at
-- **dispatch_log**: id, report_id (FK), dispatched_at, responder_id, notes
+### Phase 1
+1. Open dashboard at http://localhost:3000 — empty state
+2. Run: `python simulator/generate_reports.py` — 20 reports appear live
+3. *"AI ranked 20 messages in under a second. No human involved."*
+4. Show map heatmap — red clusters = high-risk zones
+5. Click top report → AI reasoning panel (NLP class, confidence, score formula)
+6. Submit live: *"3 people trapped, building collapsed"* → watch it hit #1 instantly
+7. *"Now let me show you what happens when the internet goes down."*
+
+### Phase 2
+8. Open http://localhost:8001 — lightweight relay form
+9. *"Citizens connect to this over local WiFi. No internet."*
+10. Submit 3 reports via relay — nothing on dashboard
+11. `python mesh/demo_mesh.py --reset` — run sync
+12. Watch 5 reports appear on dashboard live
+13. *"Same AI. Same scoring. Same dashboard. Only the ingestion layer changed."*
+
+---
+
+## Database Schema
+
+**`reports` table:**
+`id`, `timestamp`, `text_message`, `image_path`, `latitude`, `longitude`, `text_score`, `image_score`, `location_risk`, `final_priority`, `nlp_category`, `nlp_confidence`, `image_class`, `image_confidence`, `ai_reasoning` (JSON string), `status` (pending/dispatched/resolved)
+
+**`dispatch_log` table:**
+`id`, `report_id`, `dispatched_at`, `responder_id`, `notes`
+
+**`relay_queue.db` (relay-local, separate DB):**
+`id`, `received_at`, `text_message`, `latitude`, `longitude`, `image_data` (BLOB), `image_filename`, `synced`, `synced_at`
