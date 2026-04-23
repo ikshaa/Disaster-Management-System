@@ -133,3 +133,54 @@ def get_hotspots(db: Session = Depends(get_db)):
 @router.get("/stats", response_model=StatsResponse)
 def get_stats(db: Session = Depends(get_db)):
     return crud.get_stats(db)
+
+
+# ── Phase 2: Mesh batch sync endpoint ─────────────────────────────────────────
+
+from pydantic import BaseModel as _BaseModel
+
+
+class _MeshReport(_BaseModel):
+    text_message: str
+    latitude: float | None = None
+    longitude: float | None = None
+
+
+class _MeshSyncRequest(_BaseModel):
+    reports: list[_MeshReport]
+    relay_id: str = "unknown"
+
+
+@router.post("/mesh/sync")
+async def mesh_sync(body: _MeshSyncRequest, db: Session = Depends(get_db)):
+    """Accepts a batch of text-only reports from a mesh relay node."""
+    processed, failed = 0, 0
+
+    for r in body.reports:
+        try:
+            nlp_result = nlp_assessor.classify_text(r.text_message)
+            nearby = crud.count_nearby_reports(db, r.latitude, r.longitude) if r.latitude and r.longitude else 0
+            location_risk = compute_location_risk(db, r.latitude, r.longitude)
+            final_priority = compute_final_priority(nlp_result["text_score"], 0.0, location_risk)
+            reasoning = build_ai_reasoning(r.text_message, nlp_result, None, location_risk, nearby, final_priority)
+            reasoning["source"] = f"mesh_relay:{body.relay_id}"
+
+            report = crud.create_report(db, {
+                "text_message": r.text_message,
+                "latitude": r.latitude,
+                "longitude": r.longitude,
+                "text_score": nlp_result["text_score"],
+                "image_score": 0.0,
+                "location_risk": location_risk,
+                "final_priority": final_priority,
+                "nlp_category": nlp_result["category"],
+                "nlp_confidence": nlp_result["confidence"],
+                "ai_reasoning": json.dumps(reasoning),
+            })
+
+            await manager.broadcast({"type": "new_report", "report": _report_to_dict(report)})
+            processed += 1
+        except Exception as e:
+            failed += 1
+
+    return {"received": len(body.reports), "processed": processed, "failed": failed, "relay_id": body.relay_id}

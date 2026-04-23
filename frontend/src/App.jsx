@@ -1,9 +1,20 @@
 import { useState, useEffect, useCallback } from "react";
 import Dashboard from "./components/Dashboard";
+import CitizenForm from "./components/CitizenForm";
 import { getPrioritized, getStats } from "./services/api";
 import { createWebSocket } from "./services/websocket";
 
+// Register service worker for offline PWA support
+if ("serviceWorker" in navigator && import.meta.env.PROD) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js"));
+}
+
+// Simple client-side routing — /citizen shows citizen form, everything else shows dashboard
+const isCitizenRoute = window.location.pathname === "/citizen";
+
 export default function App() {
+  if (isCitizenRoute) return <CitizenForm />;
+
   const [reports, setReports] = useState([]);
   const [stats, setStats] = useState({ total: 0, pending: 0, dispatched: 0, resolved: 0, critical: 0 });
   const [connected, setConnected] = useState(false);
