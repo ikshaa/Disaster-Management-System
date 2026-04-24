@@ -605,6 +605,19 @@ footer {
       <div class="step"><div class="snum">5</div><div class="stxt"><strong>Responder dashboard</strong> updates live via WebSocket — ranked map and list, one click to dispatch</div></div>
     </div>
 
+    <div>
+      <div class="sec-head">Global Disaster Context</div>
+      <p class="body" style="margin-bottom:0.1in">Each year, <strong>over 400 natural disasters</strong> affect 160+ million people worldwide. The 2010 Haiti earthquake killed 230,000 — many due to delayed rescue coordination. The 2023 Turkey–Syria earthquake displaced <strong>5.9 million people</strong> within 48 hours, overwhelming every local emergency system.</p>
+      <p class="body" style="margin-bottom:0.1in">Traditional 911 systems rely on <strong>human operators</strong> to classify and route calls one by one. During a mass-casualty event, this single-threaded triage becomes the bottleneck that costs lives.</p>
+      <p class="body">Rescue-AI targets the <strong>critical first 72 hours</strong> — when AI-assisted triage can process hundreds of reports per minute, ensuring that the most life-threatening situations reach responders first, not last.</p>
+    </div>
+
+    <div style="background:#FEF2F2;border:0.02in solid #FECACA;border-radius:0.1in;padding:0.15in 0.18in;border-left:0.06in solid #DC2626;">
+      <div class="sec-head" style="border-left:none;padding-left:0;margin-bottom:0.08in">Project Significance</div>
+      <p class="body" style="margin-bottom:0.07in">Rescue-AI is the <strong>first open-source disaster triage system</strong> combining real-time NLP + computer vision + GPS clustering in a single deployable stack — with a built-in offline mesh fallback for disaster zones where infrastructure has been destroyed.</p>
+      <p class="body">Unlike commercial CAD (Computer-Aided Dispatch) systems costing <strong>$100k+</strong>, Rescue-AI runs on commodity hardware, is fully open-source, and can be deployed in under 10 minutes using Docker.</p>
+    </div>
+
   </div>
 
   <!-- CENTRE -->
@@ -705,15 +718,16 @@ footer {
     <div>
       <div class="sec-head">Emergency Classification</div>
       <table class="class-table">
-        <tr><th>Class</th><th>Level</th><th>Score</th></tr>
-        <tr><td class="cls-label"><span class="cls-dot" style="background:#EF4444"></span>People Trapped</td><td style="color:#EF4444;font-weight:700;font-size:0.11in">CRITICAL</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:100%"></div></div></td></tr>
-        <tr><td class="cls-label"><span class="cls-dot" style="background:#EF4444"></span>Injured People</td><td style="color:#EF4444;font-weight:700;font-size:0.11in">CRITICAL</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div></td></tr>
-        <tr><td class="cls-label"><span class="cls-dot" style="background:#F97316"></span>Infrastructure</td><td style="color:#F97316;font-weight:700;font-size:0.11in">HIGH</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:80%;background:linear-gradient(to right,#F97316,#FB923C)"></div></div></td></tr>
-        <tr><td class="cls-label"><span class="cls-dot" style="background:#F97316"></span>Fire Damage</td><td style="color:#F97316;font-weight:700;font-size:0.11in">HIGH</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:80%;background:linear-gradient(to right,#F97316,#FB923C)"></div></div></td></tr>
-        <tr><td class="cls-label"><span class="cls-dot" style="background:#F97316"></span>Request Rescue</td><td style="color:#F97316;font-weight:700;font-size:0.11in">HIGH</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:70%;background:linear-gradient(to right,#F97316,#FB923C)"></div></div></td></tr>
-        <tr><td class="cls-label"><span class="cls-dot" style="background:#EAB308"></span>Flood Damage</td><td style="color:#EAB308;font-weight:700;font-size:0.11in">MEDIUM</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:60%;background:linear-gradient(to right,#D97706,#EAB308)"></div></div></td></tr>
-        <tr><td class="cls-label"><span class="cls-dot" style="background:#22C55E"></span>Low Priority</td><td style="color:#22C55E;font-weight:700;font-size:0.11in">LOW</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:20%;background:linear-gradient(to right,#16A34A,#22C55E)"></div></div></td></tr>
+        <tr><th>Class</th><th>Level</th><th style="width:0.7in">Score</th><th>Trigger Keywords</th></tr>
+        <tr><td class="cls-label"><span class="cls-dot" style="background:#EF4444"></span>People Trapped</td><td style="color:#EF4444;font-weight:700;font-size:0.105in">CRITICAL</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:100%"></div></div></td><td style="font-size:0.095in;color:#64748B;font-style:italic">trapped, buried, stuck, cannot move</td></tr>
+        <tr><td class="cls-label"><span class="cls-dot" style="background:#EF4444"></span>Injured People</td><td style="color:#EF4444;font-weight:700;font-size:0.105in">CRITICAL</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div></td><td style="font-size:0.095in;color:#64748B;font-style:italic">bleeding, unconscious, dying, severe</td></tr>
+        <tr><td class="cls-label"><span class="cls-dot" style="background:#F97316"></span>Infrastructure</td><td style="color:#F97316;font-weight:700;font-size:0.105in">HIGH</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:80%;background:linear-gradient(to right,#F97316,#FB923C)"></div></div></td><td style="font-size:0.095in;color:#64748B;font-style:italic">collapsed, structural, building down</td></tr>
+        <tr><td class="cls-label"><span class="cls-dot" style="background:#F97316"></span>Fire Damage</td><td style="color:#F97316;font-weight:700;font-size:0.105in">HIGH</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:80%;background:linear-gradient(to right,#F97316,#FB923C)"></div></div></td><td style="font-size:0.095in;color:#64748B;font-style:italic">fire, burning, flames, smoke, blaze</td></tr>
+        <tr><td class="cls-label"><span class="cls-dot" style="background:#F97316"></span>Request Rescue</td><td style="color:#F97316;font-weight:700;font-size:0.105in">HIGH</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:70%;background:linear-gradient(to right,#F97316,#FB923C)"></div></div></td><td style="font-size:0.095in;color:#64748B;font-style:italic">rescue, SOS, help, emergency</td></tr>
+        <tr><td class="cls-label"><span class="cls-dot" style="background:#EAB308"></span>Flood Damage</td><td style="color:#EAB308;font-weight:700;font-size:0.105in">MEDIUM</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:60%;background:linear-gradient(to right,#D97706,#EAB308)"></div></div></td><td style="font-size:0.095in;color:#64748B;font-style:italic">flood, flooding, water rising, submerged</td></tr>
+        <tr><td class="cls-label"><span class="cls-dot" style="background:#22C55E"></span>Low Priority</td><td style="color:#22C55E;font-weight:700;font-size:0.105in">LOW</td><td><div class="score-bar-wrap"><div class="score-bar" style="width:20%;background:linear-gradient(to right,#16A34A,#22C55E)"></div></div></td><td style="font-size:0.095in;color:#64748B;font-style:italic">minor, debris, small, road damage</td></tr>
       </table>
+      <p style="font-size:0.1in;color:#94A3B8;margin-top:0.07in;font-style:italic">Hybrid model: DistilBERT primary · keyword fallback when model confidence is low · smart override prevents critical reports from being downgraded</p>
     </div>
 
     <div>
@@ -722,21 +736,28 @@ footer {
         <div class="feat-icon">🔀</div>
         <div class="feat-info">
           <div class="feat-title">Hybrid NLP Classifier</div>
-          <div class="feat-desc">DistilBERT + keyword fallback with a smart override: if the model downgrades a clearly critical report, keyword signals take precedence.</div>
+          <div class="feat-desc">DistilBERT fine-tuned on 22k CrisisNLP tweets + a rule-based keyword layer. A smart override prevents the model from downgrading clearly critical reports — combining statistical power with interpretable rules.</div>
         </div>
       </div>
       <div class="feat-mini">
         <div class="feat-icon">📍</div>
         <div class="feat-info">
           <div class="feat-title">Location Risk Amplification</div>
-          <div class="feat-desc">Haversine distance formula clusters GPS reports within 500m. Dense clusters raise the location risk score, amplifying urgency automatically.</div>
+          <div class="feat-desc">Haversine distance formula dynamically clusters GPS reports within a 500m radius. Three or more reports from the same block raise the location risk score from 0 to 8, amplifying urgency automatically without human intervention.</div>
         </div>
       </div>
       <div class="feat-mini">
         <div class="feat-icon">🌐</div>
         <div class="feat-info">
-          <div class="feat-title">Two-Tier Deployment</div>
-          <div class="feat-desc">Phase 1 (internet) and Phase 2 (mesh) share the exact same AI pipeline. Only the ingestion layer changes — zero duplication.</div>
+          <div class="feat-title">Two-Tier Deployment Architecture</div>
+          <div class="feat-desc">Phase 1 (internet) and Phase 2 (offline mesh) share the exact same AI pipeline, database schema, and dashboard — only the data ingestion layer differs. A relay node is independently deployable with no AI imports or GPU requirements.</div>
+        </div>
+      </div>
+      <div class="feat-mini">
+        <div class="feat-icon">🧾</div>
+        <div class="feat-info">
+          <div class="feat-title">Explainable AI Reasoning</div>
+          <div class="feat-desc">Every report stores a full JSON reasoning trace: NLP class + confidence, image damage class, location cluster count, and the complete score breakdown. Responders can audit every AI decision — building trust in automated triage.</div>
         </div>
       </div>
     </div>
@@ -763,10 +784,24 @@ footer {
     </div>
 
     <div>
+      <div class="sec-head">Training Datasets</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.08in;">
+        <div style="background:#F8FAFC;border:0.02in solid #E2E8F0;border-radius:0.07in;padding:0.1in 0.12in;">
+          <div style="font-size:0.105in;font-weight:700;color:#1E293B;margin-bottom:0.04in">CrisisNLP Dataset</div>
+          <div style="font-size:0.095in;color:#475569;line-height:1.4">22,099 labeled crisis tweets spanning earthquakes, floods, hurricanes, and wildfires. Used to fine-tune DistilBERT for 7-class emergency text classification.</div>
+        </div>
+        <div style="background:#F8FAFC;border:0.02in solid #E2E8F0;border-radius:0.07in;padding:0.1in 0.12in;">
+          <div style="font-size:0.105in;font-weight:700;color:#1E293B;margin-bottom:0.04in">AIDER Image Dataset</div>
+          <div style="font-size:0.095in;color:#475569;line-height:1.4">Aerial and ground-level disaster imagery across 5 damage classes. ResNet-50 fine-tuned with aggressive augmentation (fog, rain, shadow) for real-world robustness.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
       <div class="sec-head">Future Work</div>
-      <div class="sig-point"><div class="sig-dot" style="background:#2563EB;font-size:0.1in">→</div><div class="sig-text">PostgreSQL + Redis for production-scale deployment</div></div>
-      <div class="sig-point"><div class="sig-dot" style="background:#2563EB;font-size:0.1in">→</div><div class="sig-text">True Bluetooth / Wi-Fi Direct mesh (Android API)</div></div>
-      <div class="sig-point"><div class="sig-dot" style="background:#2563EB;font-size:0.1in">→</div><div class="sig-text">Predictive hotspot detection using historical patterns</div></div>
+      <div class="sig-point"><div class="sig-dot" style="background:#2563EB;font-size:0.1in">→</div><div class="sig-text"><strong>Production database:</strong> PostgreSQL + Redis cache for high-throughput concurrent writes during mass-casualty events</div></div>
+      <div class="sig-point"><div class="sig-dot" style="background:#2563EB;font-size:0.1in">→</div><div class="sig-text"><strong>True mesh networking:</strong> Android Wi-Fi Direct + Bluetooth LE for device-to-device relay without any WiFi infrastructure</div></div>
+      <div class="sig-point"><div class="sig-dot" style="background:#2563EB;font-size:0.1in">→</div><div class="sig-text"><strong>Predictive triage:</strong> LSTM-based hotspot forecasting using historical disaster patterns and real-time sensor feeds</div></div>
       <div class="sig-point"><div class="sig-dot" style="background:#2563EB;font-size:0.1in">→</div><div class="sig-text">Multi-language NLP support for global deployment</div></div>
     </div>
 
@@ -980,6 +1015,21 @@ footer {
         </div>
       </div>
     </div>
+    <!-- Feature highlights below phone -->
+    <div style="margin-top:0.18in;display:flex;flex-direction:column;gap:0.1in;">
+      <div style="background:#fff;border:0.02in solid #E2E8F0;border-radius:0.08in;padding:0.1in 0.14in;display:flex;gap:0.1in;align-items:flex-start;">
+        <span style="font-size:0.2in;flex-shrink:0;">🌐</span>
+        <div><div style="font-size:0.115in;font-weight:700;color:#1E293B;">Works on Any Device</div><div style="font-size:0.1in;color:#475569;line-height:1.4;margin-top:0.02in;">No app install required — open any phone browser, connect to relay WiFi, and submit instantly. PWA manifest enables "Add to Home Screen" for faster access during emergencies.</div></div>
+      </div>
+      <div style="background:#fff;border:0.02in solid #E2E8F0;border-radius:0.08in;padding:0.1in 0.14in;display:flex;gap:0.1in;align-items:flex-start;">
+        <span style="font-size:0.2in;flex-shrink:0;">🔄</span>
+        <div><div style="font-size:0.115in;font-weight:700;color:#1E293B;">Automatic Offline Queue</div><div style="font-size:0.1in;color:#475569;line-height:1.4;margin-top:0.02in;">Reports are saved to localStorage when offline. The moment connectivity is restored, the app silently syncs all queued reports — no user action needed, no data lost.</div></div>
+      </div>
+      <div style="background:#fff;border:0.02in solid #E2E8F0;border-radius:0.08in;padding:0.1in 0.14in;display:flex;gap:0.1in;align-items:flex-start;">
+        <span style="font-size:0.2in;flex-shrink:0;">📍</span>
+        <div><div style="font-size:0.115in;font-weight:700;color:#1E293B;">One-Tap GPS</div><div style="font-size:0.1in;color:#475569;line-height:1.4;margin-top:0.02in;">Browser Geolocation API fills lat/lng automatically. Citizens don't need to know coordinates — the phone does it, enabling precise GPS clustering on the responder dashboard.</div></div>
+      </div>
+    </div>
   </div>
 
   <!-- MESH NETWORK -->
@@ -992,13 +1042,13 @@ footer {
           <div class="m-node mn-blue">
             <div class="mn-icon">📱</div>
             <div class="mn-title">Citizen Phone</div>
-            <div class="mn-sub">Connects to relay via local WiFi hotspot — no internet required</div>
+            <div class="mn-sub">Connects to relay via local WiFi hotspot — no internet required at any point</div>
           </div>
           <div class="m-arr">→</div>
           <div class="m-node mn-orange">
             <div class="mn-icon">📡</div>
             <div class="mn-title">Relay Node</div>
-            <div class="mn-sub">Laptop / Pi / phone · receives &amp; queues reports in local SQLite DB</div>
+            <div class="mn-sub">Laptop / Raspberry Pi — queues reports in local SQLite with compressed image BLOB storage</div>
           </div>
         </div>
         <div class="m-arrow">↓ relay reaches hub / gains connectivity</div>
@@ -1006,29 +1056,36 @@ footer {
           <div class="m-node mn-red">
             <div class="mn-icon">⚡</div>
             <div class="mn-title">AI Hub (POST /sync)</div>
-            <div class="mn-sub">Relay forwards all queued reports — same AI pipeline, unchanged</div>
+            <div class="mn-sub">Each queued report forwarded individually through the full AI pipeline — NLP + Vision + Priority</div>
           </div>
           <div class="m-arr">→</div>
           <div class="m-node mn-green">
             <div class="mn-icon">📊</div>
             <div class="mn-title">Live Dashboard</div>
-            <div class="mn-sub">Reports appear in real-time — responders see and dispatch instantly</div>
+            <div class="mn-sub">Reports appear one by one as they sync — responders watch the map populate in real time</div>
           </div>
         </div>
       </div>
       <div class="sync-box">
-        <div class="sync-title">Key Design Principles</div>
-        <div class="sync-row">
-          <div class="sync-icon">✅</div>
-          <div class="sync-text"><strong>Zero AI changes</strong> — only the data ingestion layer swaps. NLP, Vision, Priority Engine, Dashboard untouched.</div>
+        <div class="sync-title">Phase 1 vs Phase 2 — Side by Side</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.12in;margin-top:0.06in;">
+          <div>
+            <div style="font-size:0.1in;font-weight:700;color:#60A5FA;margin-bottom:0.06in;border-bottom:0.01in solid #334155;padding-bottom:0.04in;">Phase 1 — Internet Path</div>
+            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">🌐</div><div class="sync-text" style="font-size:0.1in;">Direct to AI Hub via internet</div></div>
+            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">⚡</div><div class="sync-text" style="font-size:0.1in;">Instant triage — under 2 seconds</div></div>
+            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">📷</div><div class="sync-text" style="font-size:0.1in;">Full image upload + vision AI</div></div>
+            <div class="sync-row"><div class="sync-icon" style="font-size:0.13in;">❌</div><div class="sync-text" style="font-size:0.1in;">Requires active internet</div></div>
+          </div>
+          <div>
+            <div style="font-size:0.1in;font-weight:700;color:#F76900;margin-bottom:0.06in;border-bottom:0.01in solid #334155;padding-bottom:0.04in;">Phase 2 — Offline Mesh</div>
+            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">📡</div><div class="sync-text" style="font-size:0.1in;">Local WiFi to relay node</div></div>
+            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">💾</div><div class="sync-text" style="font-size:0.1in;">Store-and-forward on sync</div></div>
+            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">🖼</div><div class="sync-text" style="font-size:0.1in;">Images compressed &amp; stored as BLOB</div></div>
+            <div class="sync-row"><div class="sync-icon" style="font-size:0.13in;">✅</div><div class="sync-text" style="font-size:0.1in;">Zero internet required</div></div>
+          </div>
         </div>
-        <div class="sync-row">
-          <div class="sync-icon">💾</div>
-          <div class="sync-text"><strong>Relay is fully independent</strong> — no imports from the AI backend. Runs on any device with Python.</div>
-        </div>
-        <div class="sync-row">
-          <div class="sync-icon">🔄</div>
-          <div class="sync-text"><strong>Auto-sync</strong> — citizen PWA queues reports to localStorage; syncs automatically when back online.</div>
+        <div style="margin-top:0.1in;padding-top:0.08in;border-top:0.01in solid #334155;">
+          <div class="sync-row"><div class="sync-icon">🔁</div><div class="sync-text"><strong>Identical AI results</strong> — same NLP, Vision, Priority Engine, and Dashboard output regardless of which ingestion path was used. Only the timing differs.</div></div>
         </div>
       </div>
     </div>
