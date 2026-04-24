@@ -70,14 +70,31 @@ export default function ReportDetail({ report, onClose, onDispatched }) {
             <div className="text-green-400 font-semibold mb-2">AI REASONING</div>
             <Row k="nlp_class" v={`${reasoning.nlp_class} (conf: ${(reasoning.nlp_confidence * 100).toFixed(0)}%)`} />
             <Row k="image_damage" v={reasoning.image_damage} />
-            <Row k="image_severity" v={reasoning.image_severity} />
+            {reasoning.image_damage !== "no image" && (
+              <Row k="image_severity" v={reasoning.image_severity} />
+            )}
             <Row k="location_cluster" v={reasoning.location_cluster} />
             <div className="border-t border-gray-700 pt-2 mt-2">
-              <div className="text-gray-400">Score Breakdown:</div>
-              <Row k="  text_score" v={`${reasoning.text_score?.toFixed(1)} × 0.6`} />
-              <Row k="  image_score" v={`${reasoning.image_score?.toFixed(1)} × 0.3`} />
-              <Row k="  location_risk" v={`${reasoning.location_risk?.toFixed(1)} × 0.1`} />
-              <Row k="  FINAL" v={report.final_priority.toFixed(2)} highlight />
+              <div className="text-gray-400 mb-1">
+                Score Breakdown
+                {reasoning.image_damage === "no image"
+                  ? " (no image — weight redistributed to text & location):"
+                  : " (with image):"}
+              </div>
+              {(() => {
+                const sb = reasoning.score_breakdown || {};
+                const tW = sb.text_weight     ?? (reasoning.image_damage === "no image" ? 0.8 : 0.6);
+                const iW = sb.image_weight    ?? (reasoning.image_damage === "no image" ? 0.0 : 0.3);
+                const lW = sb.location_weight ?? (reasoning.image_damage === "no image" ? 0.2 : 0.1);
+                return <>
+                  <Row k="  text_score"     v={`${reasoning.text_score?.toFixed(1)} × ${tW}`} />
+                  {reasoning.image_damage !== "no image" && (
+                    <Row k="  image_score"  v={`${reasoning.image_score?.toFixed(1)} × ${iW}`} />
+                  )}
+                  <Row k="  location_risk"  v={`${reasoning.location_risk?.toFixed(1)} × ${lW}`} />
+                  <Row k="  FINAL"          v={report.final_priority.toFixed(2)} highlight />
+                </>;
+              })()}
             </div>
           </div>
 
