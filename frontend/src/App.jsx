@@ -33,8 +33,8 @@ export default function App() {
   useEffect(() => { loadData(); }, [loadData]);
 
   useEffect(() => {
-    const cleanup = createWebSocket((msg) => {
-      setConnected(true);
+    const cleanup = createWebSocket(
+      (msg) => {
       if (msg.type === "new_report") {
         setReports(prev => {
           // Deduplicate by id — prevents double-add if multiple WS connections exist
@@ -45,7 +45,10 @@ export default function App() {
       } else if (msg.type === "report_updated") {
         setReports(prev => prev.map(r => r.id === msg.report.id ? msg.report : r));
       }
-    });
+    },
+      () => setConnected(true),
+      () => setConnected(false)
+    );
     return cleanup;
   }, []);
 
