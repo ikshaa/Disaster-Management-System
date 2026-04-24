@@ -29,10 +29,25 @@ export default function CitizenForm() {
   const [image, setImage] = useState(null);
   const [relayUrl, setRelayUrl] = useState(() => localStorage.getItem(RELAY_KEY) || "");
   const [showSettings, setShowSettings] = useState(false);
-  const [status, setStatus] = useState(null); // {type: 'success'|'error', msg}
+  const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [locLoading, setLocLoading] = useState(false);
+  const [locError, setLocError] = useState("");
   const [queueCount, setQueueCount] = useState(loadQueue().length);
   const [syncing, setSyncing] = useState(false);
+
+  // Auto-detect location on mount
+  useEffect(() => { getLocation(); }, []);
+
+  function getLocation() {
+    if (!navigator.geolocation) { setLocError("Geolocation not supported. Enter manually."); return; }
+    setLocLoading(true); setLocError("");
+    navigator.geolocation.getCurrentPosition(
+      (pos) => { setLat(pos.coords.latitude.toFixed(6)); setLng(pos.coords.longitude.toFixed(6)); setLocLoading(false); },
+      () => { setLocLoading(false); setLocError("Could not get location. Enter manually."); },
+      { timeout: 8000 }
+    );
+  }
 
   const targetUrl = relayUrl.trim() || null;
   const submitEndpoint = targetUrl ? `${targetUrl}/submit` : "/api/v1/reports";
@@ -66,26 +81,27 @@ export default function CitizenForm() {
     if (online) syncQueue();
   }, [online, syncQueue]);
 
+  const locationReady = lat.trim() !== "" && lng.trim() !== "";
+
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!text.trim()) return;
+    if (!text.trim() || !locationReady) return;
     setLoading(true);
     setStatus(null);
 
     const fd = new FormData();
     fd.append("text_message", text);
-    if (lat) fd.append("latitude", lat);
-    if (lng) fd.append("longitude", lng);
+    fd.append("latitude", lat);
+    fd.append("longitude", lng);
     if (image) fd.append("image", image);
 
     if (!online) {
-      // Save to offline queue (no image — can't reliably serialize File offline)
       const q = loadQueue();
       q.push({ text_message: text, latitude: lat, longitude: lng, queued_at: new Date().toISOString() });
       saveQueue(q);
       setQueueCount(q.length);
       setStatus({ type: "offline", msg: `📴 Offline — report saved locally. Will auto-sync when reconnected. (${q.length} queued)` });
-      setText(""); setLat(""); setLng(""); setImage(null);
+      setText(""); setImage(null);
       setLoading(false);
       return;
     }
@@ -96,7 +112,7 @@ export default function CitizenForm() {
       const d = await r.json();
       const score = d.final_priority ?? "—";
       setStatus({ type: "success", msg: `✓ Report submitted! AI priority score: ${score}/10` });
-      setText(""); setLat(""); setLng(""); setImage(null);
+      setText(""); setImage(null);
     } catch (err) {
       setStatus({ type: "error", msg: `Failed to submit. Saving offline. (${err.message})` });
       const q = loadQueue();
@@ -106,13 +122,6 @@ export default function CitizenForm() {
     } finally {
       setLoading(false);
     }
-  }
-
-  function useMyLocation() {
-    navigator.geolocation?.getCurrentPosition((p) => {
-      setLat(p.coords.latitude.toFixed(6));
-      setLng(p.coords.longitude.toFixed(6));
-    });
   }
 
   function saveRelayUrl(url) {
@@ -197,21 +206,25 @@ export default function CitizenForm() {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <label className="text-xs text-gray-400 block mb-1">Latitude</label>
-              <input value={lat} onChange={(e) => setLat(e.target.value)} placeholder="43.0831"
-                className="w-full bg-gray-800 rounded px-3 py-2 text-sm text-white placeholder-gray-500 border border-gray-700 focus:border-red-500 outline-none" />
+          <div>
+            <label className="text-xs text-gray-400 uppercase tracking-widest block mb-1">
+              Location * <span className="text-red-400">(required)</span>
+            </label>
+            {locLoading && <p className="text-xs text-blue-400 mb-1 flex items-center gap-1"><span className="animate-spin inline-block">⟳</span> Detecting location...</p>}
+            {!locLoading && locationReady && <p className="text-xs text-green-400 mb-1">✓ Location detected</p>}
+            {locError && <p className="text-xs text-orange-400 mb-1">{locError}</p>}
+            <div className="grid grid-cols-2 gap-2">
+              <input value={lat} onChange={(e) => setLat(e.target.value)} placeholder="Latitude *" required
+                className={`w-full bg-gray-800 rounded px-3 py-2 text-sm text-white placeholder-gray-500 border outline-none focus:border-red-500
+                  ${lat ? "border-green-600" : "border-red-700"}`} />
+              <input value={lng} onChange={(e) => setLng(e.target.value)} placeholder="Longitude *" required
+                className={`w-full bg-gray-800 rounded px-3 py-2 text-sm text-white placeholder-gray-500 border outline-none focus:border-red-500
+                  ${lng ? "border-green-600" : "border-red-700"}`} />
             </div>
-            <div>
-              <label className="text-xs text-gray-400 block mb-1">Longitude</label>
-              <input value={lng} onChange={(e) => setLng(e.target.value)} placeholder="-76.1474"
-                className="w-full bg-gray-800 rounded px-3 py-2 text-sm text-white placeholder-gray-500 border border-gray-700 focus:border-red-500 outline-none" />
-            </div>
+            <button type="button" onClick={getLocation} className="text-xs text-blue-400 hover:text-blue-300 underline mt-1">
+              📍 Re-detect my location
+            </button>
           </div>
-          <button type="button" onClick={useMyLocation} className="text-xs text-blue-400 hover:text-blue-300 underline">
-            📍 Use my location
-          </button>
 
           <div>
             <label className="text-xs text-gray-400 uppercase tracking-widest block mb-1">Photo (optional)</label>
@@ -221,8 +234,8 @@ export default function CitizenForm() {
             {!online && <p className="text-xs text-gray-500 mt-1">Images cannot be saved offline — text + GPS will be queued.</p>}
           </div>
 
-          <button type="submit" disabled={loading || !text.trim()}
-            className="w-full py-2.5 bg-red-600 hover:bg-red-500 disabled:opacity-40 rounded font-semibold text-sm transition-colors">
+          <button type="submit" disabled={loading || !text.trim() || !locationReady}
+            className="w-full py-2.5 bg-red-600 hover:bg-red-500 disabled:opacity-40 disabled:cursor-not-allowed rounded font-semibold text-sm transition-colors">
             {loading ? "Submitting..." : online ? "Submit Report" : "Save Offline"}
           </button>
 

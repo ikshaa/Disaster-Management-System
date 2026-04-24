@@ -177,12 +177,17 @@ async function submitReport() {
   btn.disabled = true;
   btn.textContent = 'Submitting...';
 
+  const lat = document.getElementById('lat').value.trim();
+  const lng = document.getElementById('lng').value.trim();
+  if (!lat || !lng) {
+    showStatus('Location is required. Click "Use my location" or enter coordinates manually.', 'error');
+    btn.disabled = false; btn.textContent = 'Submit Report'; return;
+  }
+
   const fd = new FormData();
   fd.append('text_message', text);
-  const lat = document.getElementById('lat').value;
-  const lng = document.getElementById('lng').value;
-  if (lat) fd.append('latitude', lat);
-  if (lng) fd.append('longitude', lng);
+  fd.append('latitude', lat);
+  fd.append('longitude', lng);
   const img = document.getElementById('image').files[0];
   if (img) fd.append('image', img);
 
@@ -210,6 +215,8 @@ function showStatus(msg, type) {
 
 loadStatus();
 setInterval(loadStatus, 10000);
+// Auto-detect location on page load
+getLocation();
 </script>
 </body>
 </html>"""
@@ -225,8 +232,8 @@ def citizen_form():
 @app.post("/submit")
 async def submit_report(
     text_message: str = Form(...),
-    latitude: Optional[float] = Form(None),
-    longitude: Optional[float] = Form(None),
+    latitude: float = Form(...),
+    longitude: float = Form(...),
     image: Optional[UploadFile] = File(None),
 ):
     image_data = None

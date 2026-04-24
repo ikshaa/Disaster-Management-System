@@ -31,8 +31,8 @@ def _report_to_dict(report) -> dict:
 @router.post("/reports", response_model=ReportResponse)
 async def create_report(
     text_message: str = Form(...),
-    latitude: Optional[float] = Form(None),
-    longitude: Optional[float] = Form(None),
+    latitude: float = Form(...),
+    longitude: float = Form(...),
     image: Optional[UploadFile] = File(None),
     db: Session = Depends(get_db),
 ):
@@ -142,8 +142,8 @@ from pydantic import BaseModel as _BaseModel
 
 class _MeshReport(_BaseModel):
     text_message: str
-    latitude: float | None = None
-    longitude: float | None = None
+    latitude: float
+    longitude: float
 
 
 class _MeshSyncRequest(_BaseModel):
