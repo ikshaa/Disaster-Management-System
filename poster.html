@@ -546,8 +546,8 @@ footer {
     <div class="project-name"><em>RESCUE</em>-AI</div>
     <div class="project-tag">AI-Powered Disaster Response Coordinator</div>
     <div class="phase-pills">
-      <span class="pill p1">Phase 1 — Internet AI Triage</span>
-      <span class="pill p2">Phase 2 — Offline Mesh Network</span>
+      <span class="pill p1">Real-time AI Triage · NLP + Vision + GPS</span>
+      <span class="pill p2">Works Online &amp; Offline via Mesh Relay</span>
     </div>
   </div>
   <div class="hdr-divider"></div>
@@ -672,9 +672,9 @@ footer {
       </div>
     </div>
 
-    <!-- Phase 2 strip -->
+    <!-- Mesh strip -->
     <div class="phase2-strip">
-      <div class="phase2-title">📡 Phase 2 — Mesh Network (No Internet Required)</div>
+      <div class="phase2-title">📡 Offline Mesh Mode — Works When Internet Is Down</div>
       <div class="p2-row">
         <div class="p2-node mn-blue"><div class="p2-icon">📱</div><div class="p2-title">Citizen Phone</div><div class="p2-sub">Local WiFi only</div></div>
         <div class="p2-arrow">→</div>
@@ -749,8 +749,8 @@ footer {
       <div class="feat-mini">
         <div class="feat-icon">🌐</div>
         <div class="feat-info">
-          <div class="feat-title">Two-Tier Deployment Architecture</div>
-          <div class="feat-desc">Phase 1 (internet) and Phase 2 (offline mesh) share the exact same AI pipeline, database schema, and dashboard — only the data ingestion layer differs. A relay node is independently deployable with no AI imports or GPU requirements.</div>
+          <div class="feat-title">Online &amp; Offline in One System</div>
+          <div class="feat-desc">The same AI pipeline, database schema, and dashboard serve both direct internet submissions and offline mesh relay reports. The relay node is independently deployable with no AI imports or GPU — runs on a $35 Raspberry Pi.</div>
         </div>
       </div>
       <div class="feat-mini">
@@ -1034,7 +1034,7 @@ footer {
 
   <!-- MESH NETWORK -->
   <div class="sh-panel" style="border-right:none">
-    <div class="sh-label">Phase 2 — Offline Mesh Relay Network</div>
+    <div class="sh-label">Offline Mesh Relay — No Internet Required</div>
     <div class="mesh-content">
       <div class="mesh-diagram">
         <div class="mesh-tag">When cell towers go down...</div>
@@ -1067,25 +1067,22 @@ footer {
         </div>
       </div>
       <div class="sync-box">
-        <div class="sync-title">Phase 1 vs Phase 2 — Side by Side</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.12in;margin-top:0.06in;">
-          <div>
-            <div style="font-size:0.1in;font-weight:700;color:#60A5FA;margin-bottom:0.06in;border-bottom:0.01in solid #334155;padding-bottom:0.04in;">Phase 1 — Internet Path</div>
-            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">🌐</div><div class="sync-text" style="font-size:0.1in;">Direct to AI Hub via internet</div></div>
-            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">⚡</div><div class="sync-text" style="font-size:0.1in;">Instant triage — under 2 seconds</div></div>
-            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">📷</div><div class="sync-text" style="font-size:0.1in;">Full image upload + vision AI</div></div>
-            <div class="sync-row"><div class="sync-icon" style="font-size:0.13in;">❌</div><div class="sync-text" style="font-size:0.1in;">Requires active internet</div></div>
-          </div>
-          <div>
-            <div style="font-size:0.1in;font-weight:700;color:#F76900;margin-bottom:0.06in;border-bottom:0.01in solid #334155;padding-bottom:0.04in;">Phase 2 — Offline Mesh</div>
-            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">📡</div><div class="sync-text" style="font-size:0.1in;">Local WiFi to relay node</div></div>
-            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">💾</div><div class="sync-text" style="font-size:0.1in;">Store-and-forward on sync</div></div>
-            <div class="sync-row" style="margin-bottom:0.05in;"><div class="sync-icon" style="font-size:0.13in;">🖼</div><div class="sync-text" style="font-size:0.1in;">Images compressed &amp; stored as BLOB</div></div>
-            <div class="sync-row"><div class="sync-icon" style="font-size:0.13in;">✅</div><div class="sync-text" style="font-size:0.1in;">Zero internet required</div></div>
-          </div>
+        <div class="sync-title">Why a Mesh Relay Matters</div>
+        <div class="sync-row" style="margin-bottom:0.08in;">
+          <div class="sync-icon">💥</div>
+          <div class="sync-text">In major disasters, <strong>cell towers are often the first infrastructure to fail</strong>. The 2010 Haiti earthquake knocked out 60% of mobile networks within minutes. The 2023 Turkey earthquake left entire provinces without cellular for days. A disaster response system that depends solely on internet connectivity fails exactly when it is needed most.</div>
         </div>
-        <div style="margin-top:0.1in;padding-top:0.08in;border-top:0.01in solid #334155;">
-          <div class="sync-row"><div class="sync-icon">🔁</div><div class="sync-text"><strong>Identical AI results</strong> — same NLP, Vision, Priority Engine, and Dashboard output regardless of which ingestion path was used. Only the timing differs.</div></div>
+        <div class="sync-row" style="margin-bottom:0.08in;">
+          <div class="sync-icon">📡</div>
+          <div class="sync-text"><strong>How the relay works:</strong> A relay node — any laptop or Raspberry Pi — creates a local WiFi hotspot. Citizens within range connect and submit reports through a browser. The relay stores every report locally in a SQLite database with compressed image storage. When the relay regains internet access, it forwards all queued reports to the AI hub in one sync operation.</div>
+        </div>
+        <div class="sync-row" style="margin-bottom:0.08in;">
+          <div class="sync-icon">🧠</div>
+          <div class="sync-text"><strong>Same AI, same results:</strong> Every synced report runs through the identical NLP classifier, vision assessor, and priority engine as a directly submitted report. Responders see the same AI reasoning, the same score breakdown, and the same ranked dashboard — with no indication of how the report arrived.</div>
+        </div>
+        <div class="sync-row">
+          <div class="sync-icon">🔒</div>
+          <div class="sync-text"><strong>Fully independent design:</strong> The relay node has zero imports from the AI backend and requires no GPU or ML libraries. It can run on a $35 Raspberry Pi, making it practical to deploy relay nodes across a disaster zone before an event even begins.</div>
         </div>
       </div>
     </div>
