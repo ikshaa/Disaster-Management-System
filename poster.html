@@ -676,7 +676,7 @@ footer {
     <div class="phase2-strip">
       <div class="phase2-title">📡 Offline Mesh Mode — Works When Internet Is Down</div>
       <div class="p2-row">
-        <div class="p2-node mn-blue"><div class="p2-icon">📱</div><div class="p2-title">Citizen Phone</div><div class="p2-sub">Local WiFi only</div></div>
+        <div class="p2-node mn-blue"><div class="p2-icon">📱</div><div class="p2-title">Citizen Phone</div><div class="p2-sub">Connects to relay directly — no internet</div></div>
         <div class="p2-arrow">→</div>
         <div class="p2-node p2-orange"><div class="p2-icon">📡</div><div class="p2-title">Relay Node</div><div class="p2-sub">Stores in SQLite queue</div></div>
         <div class="p2-arrow">→</div>
@@ -1019,7 +1019,7 @@ footer {
     <div style="margin-top:0.18in;display:flex;flex-direction:column;gap:0.1in;">
       <div style="background:#fff;border:0.02in solid #E2E8F0;border-radius:0.08in;padding:0.1in 0.14in;display:flex;gap:0.1in;align-items:flex-start;">
         <span style="font-size:0.2in;flex-shrink:0;">🌐</span>
-        <div><div style="font-size:0.115in;font-weight:700;color:#1E293B;">Works on Any Device</div><div style="font-size:0.1in;color:#475569;line-height:1.4;margin-top:0.02in;">No app install required — open any phone browser, connect to relay WiFi, and submit instantly. PWA manifest enables "Add to Home Screen" for faster access during emergencies.</div></div>
+        <div><div style="font-size:0.115in;font-weight:700;color:#1E293B;">Works on Any Device</div><div style="font-size:0.1in;color:#475569;line-height:1.4;margin-top:0.02in;">No app install required — open any phone browser, connect to the relay's closed hotspot (no internet), and submit instantly. PWA manifest enables "Add to Home Screen" for faster access during emergencies.</div></div>
       </div>
       <div style="background:#fff;border:0.02in solid #E2E8F0;border-radius:0.08in;padding:0.1in 0.14in;display:flex;gap:0.1in;align-items:flex-start;">
         <span style="font-size:0.2in;flex-shrink:0;">🔄</span>
@@ -1042,7 +1042,7 @@ footer {
           <div class="m-node mn-blue">
             <div class="mn-icon">📱</div>
             <div class="mn-title">Citizen Phone</div>
-            <div class="mn-sub">Connects to relay via local WiFi hotspot — no internet required at any point</div>
+            <div class="mn-sub">Connects directly to relay device over a closed wireless hotspot — no internet at any point</div>
           </div>
           <div class="m-arr">→</div>
           <div class="m-node mn-orange">
@@ -1074,7 +1074,7 @@ footer {
         </div>
         <div class="sync-row" style="margin-bottom:0.08in;">
           <div class="sync-icon">📡</div>
-          <div class="sync-text"><strong>How the relay works:</strong> A relay node — any laptop or Raspberry Pi — creates a local WiFi hotspot. Citizens within range connect and submit reports through a browser. The relay stores every report locally in a SQLite database with compressed image storage. When the relay regains internet access, it forwards all queued reports to the AI hub in one sync operation.</div>
+          <div class="sync-text"><strong>How the relay works:</strong> A relay node (any laptop or Raspberry Pi) creates a <strong>closed wireless hotspot with no internet connection</strong> — like a router with the ISP cable unplugged. Citizens' phones connect to this device-to-device network and submit reports through a browser. All data stays on the relay's local storage. When the relay eventually reaches the AI hub and gains internet, it syncs all queued reports in one operation.</div>
         </div>
         <div class="sync-row" style="margin-bottom:0.08in;">
           <div class="sync-icon">🧠</div>
