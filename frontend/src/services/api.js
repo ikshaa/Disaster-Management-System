@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const BASE = "/api/v1";
+// Production: VITE_API_URL points to deployed backend (e.g. https://rescue-ai-api.onrender.com)
+// Development: empty string → uses Vite proxy in vite.config.js
+const API_HOST = import.meta.env.VITE_API_URL || "";
+const BASE = `${API_HOST}/api/v1`;
 
 export const getPrioritized = () => axios.get(`${BASE}/prioritized`).then(r => r.data);
 export const getReport = (id) => axios.get(`${BASE}/reports/${id}`).then(r => r.data);

@@ -1,0 +1,37 @@
+# Render Blueprint — one-click deploy for Rescue-AI
+# Use: New → Blueprint → connect this repo → Render builds both services automatically
+
+services:
+  # ─── Backend (FastAPI AI hub) ───────────────────────────────
+  - type: web
+    name: rescue-ai-backend
+    runtime: python
+    plan: free
+    branch: feature/ai-models
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+    healthCheckPath: /
+
+  # ─── Frontend (React dashboard, static site) ────────────────
+  - type: web
+    name: rescue-ai-frontend
+    runtime: static
+    branch: feature/ai-models
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      # Set this in Render dashboard AFTER backend deploys —
+      # paste backend's URL like https://rescue-ai-backend.onrender.com
+      - key: VITE_API_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
