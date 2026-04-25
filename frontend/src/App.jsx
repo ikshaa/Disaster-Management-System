@@ -26,8 +26,12 @@ export default function App() {
   }), [reports]);
 
   const loadData = useCallback(async () => {
-    const r = await getPrioritized();
-    setReports(r);
+    try {
+      const r = await getPrioritized();
+      if (Array.isArray(r)) setReports(r);
+    } catch (e) {
+      console.error("Failed to load reports:", e);
+    }
   }, []);
 
   useEffect(() => { loadData(); }, [loadData]);
