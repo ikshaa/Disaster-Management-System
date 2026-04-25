@@ -6,6 +6,26 @@ logger = logging.getLogger(__name__)
 
 BASE_DIR = os.path.dirname(__file__)
 DISTILBERT_DIR = os.path.abspath(os.path.join(BASE_DIR, "../../model/models/distilbert_crisis_classifier"))
+HF_REPO = "nehagdd/rescue-ai-models"
+
+
+def _ensure_distilbert_weights():
+    marker = os.path.join(DISTILBERT_DIR, "model.safetensors")
+    if os.path.exists(marker):
+        return
+    logger.info("DistilBERT weights not found locally — downloading from Hugging Face...")
+    from huggingface_hub import snapshot_download
+    snapshot_download(
+        repo_id=HF_REPO,
+        allow_patterns="distilbert/*",
+        local_dir=os.path.dirname(DISTILBERT_DIR),
+    )
+    # snapshot_download saves to local_dir/distilbert/ — rename to match expected path
+    downloaded_dir = os.path.join(os.path.dirname(DISTILBERT_DIR), "distilbert")
+    if os.path.isdir(downloaded_dir) and not os.path.isdir(DISTILBERT_DIR):
+        import shutil
+        shutil.move(downloaded_dir, DISTILBERT_DIR)
+    logger.info("DistilBERT weights downloaded")
 
 LABELS = [
     "people trapped",
@@ -46,8 +66,7 @@ def _load_bert():
     if _nlp_model is None:
         from transformers import AutoTokenizer, AutoModelForSequenceClassification
         import torch
-        if not os.path.isdir(DISTILBERT_DIR):
-            raise FileNotFoundError(f"DistilBERT model not found at {DISTILBERT_DIR}")
+        _ensure_distilbert_weights()
         _tokenizer = AutoTokenizer.from_pretrained(DISTILBERT_DIR)
         _nlp_model = AutoModelForSequenceClassification.from_pretrained(DISTILBERT_DIR)
         _nlp_model.eval()
