@@ -1,4 +1,4 @@
-const CACHE = "disaster-response-v1";
+const CACHE = "disaster-response-v2";
 const SHELL = ["/", "/citizen", "/index.html"];
 
 self.addEventListener("install", (e) => {
