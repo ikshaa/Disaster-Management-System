@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 
 const QUEUE_KEY = "disaster_offline_queue";
 const RELAY_KEY = "disaster_relay_url";
+const API_HOST = import.meta.env.VITE_API_URL || "";
 
 function useNetwork() {
   const [online, setOnline] = useState(navigator.onLine);
@@ -50,7 +51,7 @@ export default function CitizenForm() {
   }
 
   const targetUrl = relayUrl.trim() || null;
-  const submitEndpoint = targetUrl ? `${targetUrl}/submit` : "/api/v1/reports";
+  const submitEndpoint = targetUrl ? `${targetUrl}/submit` : `${API_HOST}/api/v1/reports`;
 
   // Auto-sync when coming back online
   const syncQueue = useCallback(async () => {
