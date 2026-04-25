@@ -9,7 +9,23 @@ services:
     plan: free
     branch: feature/ai-models
     rootDir: backend
-    buildCommand: pip install -r requirements.txt
+    buildCommand: >-
+      pip install -r requirements.txt &&
+      python -c "
+      import os, shutil;
+      from huggingface_hub import hf_hub_download, snapshot_download;
+      os.makedirs('../ai-models/outputs', exist_ok=True);
+      p = hf_hub_download('nehagdd/rescue-ai-models', 'resnet50/best_model.pt');
+      shutil.copy(p, '../ai-models/outputs/best_model.pt');
+      print('ResNet50 ready');
+      marker = '../model/models/distilbert_crisis_classifier/model.safetensors';
+      os.makedirs('../model/models', exist_ok=True);
+      snapshot_download('nehagdd/rescue-ai-models', allow_patterns='distilbert/*', local_dir='../model/models');
+      dl = '../model/models/distilbert';
+      dest = '../model/models/distilbert_crisis_classifier';
+      os.path.isdir(dl) and not os.path.isdir(dest) and shutil.move(dl, dest);
+      print('DistilBERT ready');
+      "
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
