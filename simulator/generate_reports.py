@@ -8,7 +8,8 @@ import random
 import time
 import requests
 
-API = "http://localhost:8000/api/v1/reports"
+DEFAULT_API = "http://localhost:8000/api/v1/reports"
+API = DEFAULT_API
 
 # RIT / Rochester, NY area
 BASE_LAT, BASE_LNG = 43.0831, -76.1474
@@ -66,7 +67,11 @@ def main():
     parser.add_argument("--count", type=int, default=20)
     parser.add_argument("--delay", type=float, default=0.8)
     parser.add_argument("--shuffle", action="store_true", default=True)
+    parser.add_argument("--url", type=str, default=None, help="Backend base URL, e.g. https://rescue-ai-backend.onrender.com")
     args = parser.parse_args()
+
+    global API
+    API = f"{args.url.rstrip('/')}/api/v1/reports" if args.url else DEFAULT_API
 
     pool = REPORTS * ((args.count // len(REPORTS)) + 1)
     if args.shuffle:
@@ -80,7 +85,8 @@ def main():
     for text, _ in selected:
         send_report(text, args.delay)
 
-    print("\nDone! Check the dashboard at http://localhost:3000")
+    dashboard = "https://rescue-ai-frontend.onrender.com" if args.url else "http://localhost:3000"
+    print(f"\nDone! Check the dashboard at {dashboard}")
 
 
 if __name__ == "__main__":
