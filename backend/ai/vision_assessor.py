@@ -7,19 +7,6 @@ logger = logging.getLogger(__name__)
 
 BASE_DIR = os.path.dirname(__file__)
 CHECKPOINT_PATH = os.path.abspath(os.path.join(BASE_DIR, "../../ai-models/outputs/best_model.pt"))
-HF_REPO = "nehagdd/rescue-ai-models"
-
-
-def _ensure_resnet_weights():
-    if os.path.exists(CHECKPOINT_PATH):
-        return
-    logger.info("ResNet50 weights not found locally — downloading from Hugging Face...")
-    from huggingface_hub import hf_hub_download
-    os.makedirs(os.path.dirname(CHECKPOINT_PATH), exist_ok=True)
-    downloaded = hf_hub_download(repo_id=HF_REPO, filename="resnet50/best_model.pt")
-    import shutil
-    shutil.copy(downloaded, CHECKPOINT_PATH)
-    logger.info("ResNet50 weights downloaded")
 
 NUM_CLASSES = 5
 IDX_TO_CLASS = {
@@ -62,7 +49,8 @@ def _load_model():
 
         _device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        _ensure_resnet_weights()
+        if not os.path.exists(CHECKPOINT_PATH):
+            raise FileNotFoundError(f"ResNet50 checkpoint not found at {CHECKPOINT_PATH}")
 
         model = models.resnet50(weights=None)
         in_features = model.fc.in_features

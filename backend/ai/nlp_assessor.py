@@ -6,8 +6,6 @@ logger = logging.getLogger(__name__)
 
 BASE_DIR = os.path.dirname(__file__)
 DISTILBERT_DIR = os.path.abspath(os.path.join(BASE_DIR, "../../model/models/distilbert_crisis_classifier"))
-HF_REPO = "nehagdd/rescue-ai-models"
-HF_SUBFOLDER = "distilbert"
 
 LABELS = [
     "people trapped",
@@ -47,14 +45,11 @@ def _load_bert():
     global _tokenizer, _nlp_model
     if _nlp_model is None:
         from transformers import AutoTokenizer, AutoModelForSequenceClassification
-        local_ok = os.path.isdir(DISTILBERT_DIR) and os.path.exists(
-            os.path.join(DISTILBERT_DIR, "model.safetensors")
-        )
-        source = DISTILBERT_DIR if local_ok else HF_REPO
-        kwargs = {} if local_ok else {"subfolder": HF_SUBFOLDER}
-        logger.info(f"Loading DistilBERT from {'local path' if local_ok else 'Hugging Face'}")
-        _tokenizer = AutoTokenizer.from_pretrained(source, **kwargs)
-        _nlp_model = AutoModelForSequenceClassification.from_pretrained(source, **kwargs)
+        import torch
+        if not os.path.isdir(DISTILBERT_DIR):
+            raise FileNotFoundError(f"DistilBERT model not found at {DISTILBERT_DIR}")
+        _tokenizer = AutoTokenizer.from_pretrained(DISTILBERT_DIR)
+        _nlp_model = AutoModelForSequenceClassification.from_pretrained(DISTILBERT_DIR)
         _nlp_model.eval()
         logger.info("DistilBERT NLP model loaded")
     return _tokenizer, _nlp_model
