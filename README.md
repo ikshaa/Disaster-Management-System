@@ -1,3 +1,4 @@
+
 # AI Disaster Response Coordinator
 
 An AI system that receives disaster reports from citizens, automatically ranks them by urgency using NLP and computer vision, and shows emergency responders a live prioritized dashboard — even when there is **no internet** (Phase 2 mesh network).

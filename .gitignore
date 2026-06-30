@@ -28,4 +28,6 @@ frontend/node_modules/
 
 # Backend runtime files
 backend/uploads/
-backend/disaster_reports.dbmesh/relay_queue.db
+backend/disaster_reports.db
+mesh/relay_queue.db
+*.db
