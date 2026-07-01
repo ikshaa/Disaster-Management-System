@@ -7,7 +7,7 @@ services:
     name: rescue-ai-backend
     runtime: python
     plan: free
-    branch: feature/ai-models
+    branch: main
     rootDir: backend
     buildCommand: pip install -r requirements.txt && python download_models.py
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -22,7 +22,7 @@ services:
   - type: web
     name: rescue-ai-frontend
     runtime: static
-    branch: feature/ai-models
+    branch: main
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
