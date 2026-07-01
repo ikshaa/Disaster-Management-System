@@ -78,8 +78,8 @@ def classify_text(text: str) -> dict:
     kw = _keyword_fallback(text)
 
     try:
-        import torch
         tokenizer, model = _load_bert()
+        import torch
         inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=128, padding=True)
         with torch.no_grad():
             logits = model(**inputs).logits[0]
