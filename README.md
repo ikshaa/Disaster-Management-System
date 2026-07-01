@@ -1,6 +1,8 @@
 
 # AI Disaster Response Coordinator
 
+**[Live Demo](https://rescue-ai-frontend-cr8j.onrender.com)** | **[API Docs](https://rescue-ai-backend-klb2.onrender.com/docs)**
+
 An AI system that receives disaster reports from citizens, automatically ranks them by urgency using NLP and computer vision, and shows emergency responders a live prioritized dashboard — even when there is **no internet** (Phase 2 mesh network).
 
 Built for **Imagine RIT**. Designed for real-world deployment.
