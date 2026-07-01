@@ -43,14 +43,13 @@ _device = None
 def _load_model():
     global _vision_model, _device
     if _vision_model is None:
+        if not os.path.exists(CHECKPOINT_PATH):
+            raise FileNotFoundError(f"ResNet50 checkpoint not found at {CHECKPOINT_PATH}")
         import torch
         import torch.nn as nn
         from torchvision import models
 
         _device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-        if not os.path.exists(CHECKPOINT_PATH):
-            raise FileNotFoundError(f"ResNet50 checkpoint not found at {CHECKPOINT_PATH}")
 
         model = models.resnet50(weights=None)
         in_features = model.fc.in_features
@@ -83,8 +82,8 @@ def _preprocess(image_path: str):
 
 def analyze_image(image_path: str) -> dict:
     try:
-        import torch
         model, device = _load_model()
+        import torch
         tensor = _preprocess(image_path).to(device)
 
         with torch.no_grad():

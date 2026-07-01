@@ -44,10 +44,10 @@ _nlp_model = None
 def _load_bert():
     global _tokenizer, _nlp_model
     if _nlp_model is None:
-        from transformers import AutoTokenizer, AutoModelForSequenceClassification
-        import torch
         if not os.path.isdir(DISTILBERT_DIR):
             raise FileNotFoundError(f"DistilBERT model not found at {DISTILBERT_DIR}")
+        from transformers import AutoTokenizer, AutoModelForSequenceClassification
+        import torch
         _tokenizer = AutoTokenizer.from_pretrained(DISTILBERT_DIR)
         _nlp_model = AutoModelForSequenceClassification.from_pretrained(DISTILBERT_DIR)
         _nlp_model.eval()
